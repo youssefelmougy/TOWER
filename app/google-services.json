@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "7223340710",
+    "firebase_url": "https://tower-9cdc5.firebaseio.com",
+    "project_id": "tower-9cdc5",
+    "storage_bucket": "tower-9cdc5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:7223340710:android:c73bbe797aee357dae4e67",
+        "android_client_info": {
+          "package_name": "com.example.tower"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "7223340710-2ke9g2pk6h5r1t7q46te4m4n37ku1rn8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.tower",
+            "certificate_hash": "92af987c68a4a7f95349790aea7d7ad8be04d672"
+          }
+        },
+        {
+          "client_id": "7223340710-vr17nv4edm2fr6v1ciq9jc34vv5t01m9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAFG5wjzgSkvVvxhfcfISLiMF0w1FM1XNI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "7223340710-vr17nv4edm2fr6v1ciq9jc34vv5t01m9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
