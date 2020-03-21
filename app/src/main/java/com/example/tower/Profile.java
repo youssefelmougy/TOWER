@@ -67,8 +67,6 @@ public class Profile extends AppCompatActivity {
         EditText passField = findViewById(R.id.password_login);
         final String user = userField.getText().toString();
         final String password = passField.getText().toString();
-        Log.d("Mike", user);
-        Log.d("Mike", password);
 
         final DatabaseReference myRef = database.getReference().child("students");
         Query query = myRef.orderByKey().equalTo(user);
@@ -76,7 +74,6 @@ public class Profile extends AppCompatActivity {
                 @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    Log.d("Mike", "Yay!!! This was reached.");
                     DatabaseReference newRef = myRef.child(user);
 
                     newRef.addValueEventListener(new ValueEventListener() {
@@ -88,7 +85,8 @@ public class Profile extends AppCompatActivity {
                                 result.setTextColor(Color.GREEN);
                                 result.setText("Correct Username and Password!!!");
                                 MainActivity.loggedIn = true;
-                                login(student.getName());
+                                MainActivity.id = student.getId();
+                                login(student.getId());
                             }
                             else {
                                 result.setTextColor(Color.RED);
@@ -119,8 +117,9 @@ public class Profile extends AppCompatActivity {
 
     }
 
-    public void login(String name) {
+    public void login(long id) {
         Intent intent = new Intent(this, ProfileLogin.class);
+        intent.putExtra("STUDENT_ID", id);
         startActivity(intent);
     }
 

@@ -3,10 +3,12 @@ package com.example.tower;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.GridView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -15,14 +17,24 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     public static Boolean loggedIn = false;
-
+    public static long id = 000000000;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        GridView gridView = findViewById(R.id.main_grid_view);
+        displayTextbooks(this, gridView);
 
         //Initialize and Assign Variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -59,10 +71,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    public void displayTextbooks(final Context context, final GridView gridView) {
+        DatabaseReference reference = database.getReference().child("textbooks");
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ArrayList<Textbook> textbooks = new ArrayList<>();
+                for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    Textbook textbook = snapshot.getValue(Textbook.class);
+                    textbooks.add(textbook);
+                    Log.d("MikeC", "" + textbooks.size());
+                }
+                gridView.setAdapter(new TextbookAdapter(context, textbooks));
 
-    DatabaseReference reference = database.getReference().child("students");
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
 
+            }
+        });
+    }
 
 }

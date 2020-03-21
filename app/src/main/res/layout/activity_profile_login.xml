@@ -17,18 +17,48 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/menu_navigation">
+        app:menu="@menu/menu_navigation" />
 
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
-
-    <GridView
-        android:id="@+id/gridView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+    <TextView
+        android:id="@+id/profile_login_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Welcome Back"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/add_book_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add a Book"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_grid_view" />
+
+    <GridView
+        android:id="@+id/main_grid_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="24dp"
+        android:columnWidth="100dp"
+        android:gravity="center"
+        android:horizontalSpacing="10dp"
+        android:numColumns="2"
+        android:stretchMode="spacingWidthUniform"
+        android:verticalSpacing="24dp"
+        app:layout_constraintBottom_toTopOf="@+id/add_book_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_login_title" >
+
+    </GridView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
