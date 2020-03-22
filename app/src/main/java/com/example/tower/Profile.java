@@ -61,7 +61,6 @@ public class Profile extends AppCompatActivity {
     //TODO Create Activity for Once You're Logged In
 
     public void onClickLogin(View view) {
-        Button btn = findViewById(R.id.login_button);
         final TextView result = findViewById(R.id.login_result);
         EditText userField = findViewById(R.id.username_login);
         EditText passField = findViewById(R.id.password_login);

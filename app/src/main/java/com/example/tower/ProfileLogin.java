@@ -8,8 +8,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -86,6 +88,19 @@ public class ProfileLogin extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (getIntent() != null) {
+            Intent intent = getIntent();
+            String message = "";
+            if (intent.getStringExtra("ADDED_BOOK_MESSAGE") != null) {
+                message = intent.getStringExtra("ADDED_BOOK_MESSAGE");
+                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
     public void displayTextbooks(final Context context, final GridView gridView) {
         DatabaseReference reference = database.getReference().child("textbooks");
         reference.addValueEventListener(new ValueEventListener() {
@@ -109,6 +124,11 @@ public class ProfileLogin extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void onClickAdd (View view) {
+        Intent intent = new Intent(this, AddBook.class);
+        startActivity(intent);
     }
 
 }
