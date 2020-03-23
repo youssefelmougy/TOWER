@@ -2,13 +2,19 @@ package com.example.tower;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.text.NumberFormat;
 
 import org.w3c.dom.Text;
@@ -50,30 +56,50 @@ public class TextbookAdapter extends BaseAdapter {
             Log.d("Mike", "Hey I'm here!!!");
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
             convertView = layoutInflater.inflate(R.layout.textbook, parent, false);
-            final ImageView imageView = (ImageView)convertView.findViewById(R.id.imageview_cover_art);
-            final TextView nameTextView = (TextView)convertView.findViewById(R.id.textview_book_name);
-            final TextView authorTextView = (TextView)convertView.findViewById(R.id.textview_book_author);
-            final TextView sellerTextView = (TextView)convertView.findViewById(R.id.textview_book_seller);
-            final TextView priceTextView = (TextView)convertView.findViewById(R.id.textview_book_price);
 
-            // 4
-            imageView.setImageResource(R.drawable.textbook);
-            nameTextView.setText(book.getTitle());
-            authorTextView.setText(book.getAuthor());
-            sellerTextView.setText("" + book.getSeller());
+            LinearLayout layout = convertView.findViewById(R.id.textbook_layout);
 
-            NumberFormat formatter = NumberFormat.getCurrencyInstance();
-            double amt = book.getPrice();
-            priceTextView.setText("" + formatter.format(amt));
+            layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    sendSpecificBook(book);
+                }
+            });
         }
         else {
             Log.d("Mike", "No I'm actually over here!!!");
-
         }
 
+        final ImageView imageView = (ImageView)convertView.findViewById(R.id.imageview_cover_art);
+        final TextView nameTextView = (TextView)convertView.findViewById(R.id.textview_book_name);
+        final TextView authorTextView = (TextView)convertView.findViewById(R.id.textview_book_author);
+        final TextView sellerTextView = (TextView)convertView.findViewById(R.id.textview_book_seller);
+        final TextView priceTextView = (TextView)convertView.findViewById(R.id.textview_book_price);
+
+        // 4
+        imageView.setImageResource(R.drawable.textbook);
+        nameTextView.setText(book.getTitle());
+        authorTextView.setText(book.getAuthor());
+        sellerTextView.setText("" + book.getSeller());
+
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        double amt = book.getPrice();
+        priceTextView.setText("" + formatter.format(amt));
         // 3
 
 
         return convertView;
+    }
+
+    private void sendSpecificBook(Textbook textbook) {
+        Intent intent = new Intent(mContext, SpecificTextbook.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("BOOK_TITLE", textbook.getTitle());
+        bundle.putString("BOOK_AUTHOR", textbook.getAuthor());
+        bundle.putLong("BOOK_SELLER", textbook.getSeller());
+        bundle.putDouble("BOOK_PRICE", textbook.getPrice());
+        intent.putExtras(bundle);
+
+        mContext.startActivity(intent);
     }
 }

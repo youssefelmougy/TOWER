@@ -1,6 +1,7 @@
 package com.example.tower;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -20,6 +21,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 //TODO Create Dynamic UI for adding Textbooks
@@ -29,15 +32,16 @@ import java.util.ArrayList;
 public class ProfileLogin extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
+    GridView gridView;
+    TextbookAdapter adapter;
     long studentID = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_login);
-
+        gridView = (GridView)findViewById(R.id.main_grid_view);
         studentID = MainActivity.id;
 
-        GridView gridView = (GridView)findViewById(R.id.main_grid_view);
         displayTextbooks(this, gridView);
 
         DatabaseReference ref1 = database.getReference("/students/" + studentID);
@@ -88,18 +92,6 @@ public class ProfileLogin extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (getIntent() != null) {
-            Intent intent = getIntent();
-            String message = "";
-            if (intent.getStringExtra("ADDED_BOOK_MESSAGE") != null) {
-                message = intent.getStringExtra("ADDED_BOOK_MESSAGE");
-                Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
 
     public void displayTextbooks(final Context context, final GridView gridView) {
         DatabaseReference reference = database.getReference().child("textbooks");
@@ -115,7 +107,8 @@ public class ProfileLogin extends AppCompatActivity {
                     }
                     Log.d("MikeC", "" + textbooks.size());
                 }
-                gridView.setAdapter(new TextbookAdapter(context, textbooks));
+                adapter = new TextbookAdapter(context, textbooks);
+                gridView.setAdapter(adapter);
 
             }
 
@@ -128,7 +121,30 @@ public class ProfileLogin extends AppCompatActivity {
 
     public void onClickAdd (View view) {
         Intent intent = new Intent(this, AddBook.class);
-        startActivity(intent);
+        startActivityForResult(intent, 2);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 2) {
+            String title = data.getStringExtra("BOOK_TITLE");
+            String author = data.getStringExtra("BOOK_AUTHOR");
+            double price = data.getDoubleExtra("BOOK_PRICE", 0);
+            Textbook textbook = new Textbook(title, author, MainActivity.id, price);
+            addBook(textbook);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    public void addBook(Textbook textbook) {
+        DatabaseReference reference = database.getReference().child("textbooks");
+        String key = reference.push().getKey();
+        reference.child(key).child("title").setValue(textbook.getTitle());
+        reference.child(key).child("author").setValue(textbook.getAuthor());
+        reference.child(key).child("price").setValue(textbook.getPrice());
+        reference.child(key).child("seller").setValue(MainActivity.id);
+
     }
 
 }

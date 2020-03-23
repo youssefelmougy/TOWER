@@ -5,26 +5,41 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-public class AddBook extends AppCompatActivity {
+import org.w3c.dom.Text;
 
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
+import java.text.NumberFormat;
+
+public class SpecificTextbook extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_book);
+        setContentView(R.layout.activity_specific_textbook);
+
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+
+        String title = extras.getString("BOOK_TITLE");
+        String author = extras.getString("BOOK_AUTHOR");
+        long seller = extras.getLong("BOOK_SELLER");
+        Double price = extras.getDouble("BOOK_PRICE");
+        TextView specificTitle = (TextView)findViewById(R.id.specific_title);
+        TextView specificAuthor = (TextView)findViewById(R.id.specific_author);
+        TextView specificSeller = (TextView)findViewById(R.id.specific_seller);
+        TextView specificPrice = (TextView)findViewById(R.id.specific_price);
+
+        specificTitle.setText(title);
+        specificAuthor.setText(author);
+        specificSeller.setText("Seller: " + seller);
+
+        NumberFormat formatter = NumberFormat.getCurrencyInstance();
+        specificPrice.setText(formatter.format(price));
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -45,6 +60,8 @@ public class AddBook extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), ProfileLogin.class));
+                        overridePendingTransition(0,0);
                         return true;
                 }
 
@@ -53,24 +70,8 @@ public class AddBook extends AppCompatActivity {
         });
     }
 
-    public void onClickSubmit(View view) {
-        EditText titleET = (EditText) findViewById(R.id.title_text);
-        EditText authorET = (EditText) findViewById(R.id.author_text);
-        EditText priceET = (EditText) findViewById(R.id.price_text);
-
-        String title = titleET.getText().toString();
-        String author = authorET.getText().toString();
-        Double price = Double.parseDouble(priceET.getText().toString());
-
+    public void onClickReturn(View view) {
         Intent intent = new Intent(this, ProfileLogin.class);
-
-        intent.putExtra("BOOK_TITLE", title);
-        intent.putExtra("BOOK_AUTHOR", author);
-        intent.putExtra("BOOK_PRICE", price);
-
-
-        Toast.makeText(this, "Added " + title, Toast.LENGTH_SHORT).show();
-        setResult(2, intent);
-        finish();
+        startActivity(intent);
     }
 }
