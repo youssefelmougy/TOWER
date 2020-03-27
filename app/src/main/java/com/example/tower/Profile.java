@@ -86,8 +86,6 @@ public class Profile extends AppCompatActivity {
         });
     }
 
-    //TODO Create Activity for Once You're Logged In
-
     public void onClickLogin(View view) {
         final TextView result = findViewById(R.id.login_result);
         EditText userField = findViewById(R.id.username_login);
@@ -139,6 +137,38 @@ public class Profile extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    public void onClickSignup(View view) {
+        final DatabaseReference ref = database.getReference().child("students");
+
+        EditText idInput = findViewById(R.id.signup_id);
+        EditText nameInput = findViewById(R.id.signup_name);
+        EditText emailInput = findViewById(R.id.signup_email);
+        EditText passInput = findViewById(R.id.signup_password);
+        EditText passRepeat = findViewById(R.id.signup_repeat_password);
+
+        Long id = Long.parseLong(idInput.getText().toString());
+        String fullName = nameInput.getText().toString();
+        String email = emailInput.getText().toString();
+        String password = passInput.getText().toString();
+        String passwordRepeat = passRepeat.getText().toString();
+
+        if(!password.equals(passwordRepeat)) {
+            makeToast("Please enter the same password");
+        }
+
+        else {
+            ref.child("" + id).child("id").setValue(id);
+            ref.child("" + id).child("name").setValue(fullName);
+            ref.child("" + id).child("email").setValue(email);
+            ref.child("" + id).child("password").setValue(password);
+            MainActivity.loggedIn = true;
+            MainActivity.id = id;
+            login(id);
+        }
+
 
     }
 
