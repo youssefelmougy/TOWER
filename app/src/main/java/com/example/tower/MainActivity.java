@@ -33,8 +33,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Log.d("Corona", "" + getLocalClassName());
         GridView gridView = findViewById(R.id.main_grid_view);
         displayTextbooks(this, gridView);
+
+
 
         //Initialize and Assign Variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -80,9 +83,8 @@ public class MainActivity extends AppCompatActivity {
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     Textbook textbook = snapshot.getValue(Textbook.class);
                     textbooks.add(textbook);
-                    Log.d("MikeC", "" + textbooks.size());
                 }
-                gridView.setAdapter(new TextbookAdapter(context, textbooks));
+                gridView.setAdapter(new TextbookAdapter(context, textbooks, getLocalClassName()));
 
             }
 

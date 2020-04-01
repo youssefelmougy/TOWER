@@ -10,10 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".SpecificTextbook"></activity>
-        <activity android:name=".AddBook" />
+        <activity android:name=".AddBook"
+            android:windowSoftInputMode="adjustPan" />/>
         <activity android:name=".ProfileLogin" />
-        <activity android:name=".Profile" />
-        <activity android:name=".Search" />
+        <activity android:name=".Profile"
+            android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".Search"
+            android:windowSoftInputMode="adjustPan" />/>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -107,7 +107,7 @@ public class ProfileLogin extends AppCompatActivity {
                     }
                     Log.d("MikeC", "" + textbooks.size());
                 }
-                adapter = new TextbookAdapter(context, textbooks);
+                adapter = new TextbookAdapter(context, textbooks,getLocalClassName());
                 gridView.setAdapter(adapter);
 
             }
@@ -144,6 +144,7 @@ public class ProfileLogin extends AppCompatActivity {
         reference.child(key).child("author").setValue(textbook.getAuthor());
         reference.child(key).child("price").setValue(textbook.getPrice());
         reference.child(key).child("seller").setValue(MainActivity.id);
+        reference.child(key).child("uniqueID").setValue(key);
 
     }
 

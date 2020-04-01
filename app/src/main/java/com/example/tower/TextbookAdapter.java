@@ -1,23 +1,19 @@
 package com.example.tower;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.text.NumberFormat;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -25,10 +21,12 @@ public class TextbookAdapter extends BaseAdapter {
 
     private final Context mContext;
     private ArrayList<Textbook> textbooks;
+    private String originalClass;
 
-    public TextbookAdapter(Context mContext, ArrayList<Textbook> textbooks) {
+    public TextbookAdapter(Context mContext, ArrayList<Textbook> textbooks, String originalClass) {
         this.mContext = mContext;
         this.textbooks = textbooks;
+        this.originalClass = originalClass;
     }
 
     @Override
@@ -98,8 +96,9 @@ public class TextbookAdapter extends BaseAdapter {
         bundle.putString("BOOK_AUTHOR", textbook.getAuthor());
         bundle.putLong("BOOK_SELLER", textbook.getSeller());
         bundle.putDouble("BOOK_PRICE", textbook.getPrice());
+        bundle.putString("CLASS_FROM", "" + originalClass);
+        bundle.putString("UNIQUE_ID", textbook.getUniqueID());
         intent.putExtras(bundle);
-
         mContext.startActivity(intent);
     }
 }

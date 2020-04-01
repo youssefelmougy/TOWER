@@ -6,6 +6,7 @@ public class Textbook {
     private String author;
     private long seller;
     private double price;
+    private String uniqueID;
 
     public Textbook() {
     }
@@ -16,6 +17,18 @@ public class Textbook {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public String getUniqueID() {
+        return uniqueID;
+    }
+
+    public Textbook(String title, String author, long seller, double price, String uniqueID) {
+        this.title = title;
+        this.author = author;
+        this.seller = seller;
+        this.price = price;
+        this.uniqueID = uniqueID;
     }
 
     public Textbook(String title, String author, long seller, double price) {
