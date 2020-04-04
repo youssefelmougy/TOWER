@@ -89,6 +89,8 @@ public class Search extends AppCompatActivity {
 
     public void onClickSubmit(View view)
     {
+        searchBox = findViewById(R.id.search_box);
+        searchQuery = searchBox.getText().toString();
         findTextbooks(mContext, gridView, searchQuery);
 
     }
@@ -103,7 +105,6 @@ public class Search extends AppCompatActivity {
                 {
                     Textbook textbook = snapshot.getValue(Textbook.class);
                     textbooks.add(textbook);
-                    //Log.d("LiamC", " " + textbook.getUniqueID());
                 }
 
                 ArrayList<Textbook> orderedList = orderBySimilarityMK2(textbooks, searchQuery);
@@ -111,10 +112,7 @@ public class Search extends AppCompatActivity {
                 for (Textbook i : orderedList)
                 {
                     Log.d("LiamC", " " + i.getTitle());
-                    Log.d("LiamC", " " + i.getAuthor());
-                    Log.d("LiamC", " " + i.getUniqueID());
-                    Log.d("LiamC", " " + i.getPrice());
-                    Log.d("LiamC", " " + i.getSeller());
+
                 }
                 TextbookAdapter adapter = new TextbookAdapter(context, orderedList, getLocalClassName());
                 gridView.setAdapter(adapter);
