@@ -38,6 +38,13 @@ public class Textbook {
         this.price = price;
     }
 
+    public Textbook(String title) {
+        this.title = title;
+        this.author = "";
+        this.seller = 0;
+        this.price = 0;
+    }
+
     public String getTitle() {
         return title;
     }

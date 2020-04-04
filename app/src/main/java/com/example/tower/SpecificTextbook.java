@@ -74,9 +74,11 @@ public class SpecificTextbook extends AppCompatActivity {
         if(originatingClass.equals("MainActivity")) {
             bottomNavigationView.setSelectedItemId(R.id.home);
         }
-        else{
+        else if (originatingClass.equals("Profile")){
             bottomNavigationView.setSelectedItemId(R.id.profile);
-
+        }
+        else {
+            bottomNavigationView.setSelectedItemId(R.id.search);
         }
         //Perform ItemSelectedListener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -121,6 +123,9 @@ public class SpecificTextbook extends AppCompatActivity {
         Intent intent;
         if(originatingClass.equals("MainActivity")) {
             intent = new Intent(this, MainActivity.class);
+        }
+        else if(originatingClass.equals("Search")) {
+            intent = new Intent(this, Search.class);
         }
         else{
             intent = new Intent(this, ProfileLogin.class);

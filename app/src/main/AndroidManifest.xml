@@ -11,12 +11,12 @@
         android:theme="@style/AppTheme">
         <activity android:name=".SpecificTextbook"></activity>
         <activity android:name=".AddBook"
-            android:windowSoftInputMode="adjustPan" />/>
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ProfileLogin" />
         <activity android:name=".Profile"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".Search"
-            android:windowSoftInputMode="adjustPan" />/>
+            android:windowSoftInputMode="adjustPan" />
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
