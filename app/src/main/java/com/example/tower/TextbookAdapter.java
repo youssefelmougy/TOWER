@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -118,12 +117,16 @@ public class TextbookAdapter extends BaseAdapter {
         bundle.putDouble("BOOK_PRICE", textbook.getPrice());
         bundle.putString("CLASS_FROM", "" + originalClass);
         bundle.putString("UNIQUE_ID", textbook.getUniqueID());
+        bundle.putString("IMAGE_URL", textbook.getImageUrl());
+        bundle.putString("BOOK_DESCRIPTION", textbook.getDescription());
+        bundle.putString("BOOK_ISBN", textbook.getIsbn13());
         if(searchQuery != null) {
             bundle.putString("SEARCH_QUERY", searchQuery);
-            bundle.putString("IMAGE_URL", textbook.getImageUrl());
+
 
         }
         intent.putExtras(bundle);
         mContext.startActivity(intent);
+
     }
 }

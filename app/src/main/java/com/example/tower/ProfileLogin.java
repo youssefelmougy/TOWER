@@ -98,6 +98,7 @@ public class ProfileLogin extends AppCompatActivity {
                 ArrayList<Textbook> textbooks = new ArrayList<>();
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     Textbook textbook = snapshot.getValue(Textbook.class);
+                    Log.d("ekim", "image_url " + textbook.getImageUrl());
                     if(textbook.getSeller() == MainActivity.id) {
                         Log.d("MikeC", "Reached!!");
                         textbooks.add(textbook);

@@ -20,7 +20,7 @@
         app:layout_constraintTop_toBottomOf="@+id/username_login" />
 
     <TextView
-        android:id="@+id/signup_header"
+        android:id="@+id/login_header"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Login"
@@ -42,7 +42,7 @@
         android:hint="Hofstra ID"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup_header" />
+        app:layout_constraintTop_toBottomOf="@+id/login_header" />
 
     <TextView
         android:id="@+id/username_title_login"
@@ -56,7 +56,7 @@
         app:layout_constraintEnd_toStartOf="@+id/username_login"
         app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup_header" />
+        app:layout_constraintTop_toBottomOf="@+id/login_header" />
 
     <Button
         android:id="@+id/login_button"

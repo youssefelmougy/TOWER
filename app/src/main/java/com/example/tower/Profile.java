@@ -7,10 +7,8 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -143,11 +141,11 @@ public class Profile extends AppCompatActivity {
     public void onClickSignup(View view) {
         final DatabaseReference ref = database.getReference().child("students");
 
-        EditText idInput = findViewById(R.id.signup_id);
-        EditText nameInput = findViewById(R.id.signup_name);
-        EditText emailInput = findViewById(R.id.signup_email);
-        EditText passInput = findViewById(R.id.signup_password);
-        EditText passRepeat = findViewById(R.id.signup_repeat_password);
+        EditText idInput = findViewById(R.id.add_book_title);
+        EditText nameInput = findViewById(R.id.add_book_author);
+        EditText emailInput = findViewById(R.id.add_book_isbn);
+        EditText passInput = findViewById(R.id.add_book_description);
+        EditText passRepeat = findViewById(R.id.add_book_price);
 
         Long id = Long.parseLong(idInput.getText().toString());
         String fullName = nameInput.getText().toString();

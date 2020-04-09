@@ -37,7 +37,7 @@
         app:layout_constraintTop_toBottomOf="@+id/signup_header" />
 
     <EditText
-        android:id="@+id/signup_id"
+        android:id="@+id/add_book_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -57,10 +57,10 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup_id" />
+        app:layout_constraintTop_toBottomOf="@+id/add_book_title" />
 
     <EditText
-        android:id="@+id/signup_name"
+        android:id="@+id/add_book_author"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -79,10 +79,10 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup_name" />
+        app:layout_constraintTop_toBottomOf="@+id/add_book_author" />
 
     <EditText
-        android:id="@+id/signup_email"
+        android:id="@+id/add_book_isbn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -101,10 +101,10 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup_email" />
+        app:layout_constraintTop_toBottomOf="@+id/add_book_isbn" />
 
     <EditText
-        android:id="@+id/signup_password"
+        android:id="@+id/add_book_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -123,10 +123,10 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup_password" />
+        app:layout_constraintTop_toBottomOf="@+id/add_book_description" />
 
     <EditText
-        android:id="@+id/signup_repeat_password"
+        android:id="@+id/add_book_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -137,7 +137,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
     <Button
-        android:id="@+id/signup_button"
+        android:id="@+id/add_book_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -147,6 +147,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signup_repeat_password" />
+        app:layout_constraintTop_toBottomOf="@+id/add_book_price" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

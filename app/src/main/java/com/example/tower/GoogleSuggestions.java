@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.GridView;
 
 import com.android.volley.Request;
@@ -92,6 +93,11 @@ public class GoogleSuggestions extends AppCompatActivity {
 
     }
 
+    public void notBookButton(View view) {
+        Intent intent = new Intent(this, AddBookFinal.class);
+        startActivity(intent);
+    }
+
     private void jsonParse(String apiLink) {
         String url = apiLink;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
@@ -113,6 +119,7 @@ public class GoogleSuggestions extends AppCompatActivity {
                             String title = volumeInfo.getString("title");
                             JSONArray authorsArr = volumeInfo.getJSONArray("authors");
                             String authors = "";
+                            String description = volumeInfo.getString("description");
                             for(int j = 0; j < authorsArr.length(); j++) {
                                 String author = authorsArr.getString(j);
                                 if(j == authorsArr.length()-1){
@@ -122,14 +129,19 @@ public class GoogleSuggestions extends AppCompatActivity {
                                 authors += author + ", ";
                             }
                             if(!volumeInfo.has("industryIdentifiers")) continue;
+                            String isbn13 = "";
                             JSONArray industryIdentifiersArr = volumeInfo.getJSONArray("industryIdentifiers");
-                            JSONObject industryIdentifiers = industryIdentifiersArr.getJSONObject(0);
-                            String isbn13 = industryIdentifiers.getString("identifier");
+                            for(int j = 0; j < industryIdentifiersArr.length(); j++) {
+                                JSONObject industryIdentifiers = industryIdentifiersArr.getJSONObject(j);
+                                if(industryIdentifiers.getString("type").equals("ISBN_13")) {
+                                    isbn13 = industryIdentifiers.getString("identifier");
+                                }
+                            }
                             if(!volumeInfo.has("imageLinks")) continue;
                             JSONObject linkObject = volumeInfo.getJSONObject("imageLinks");
                             String imageUrl = linkObject.getString("thumbnail");
                             imageUrl = imageUrl.substring(0,4)+"s" + imageUrl.substring(4,imageUrl.length())+".jpg";
-                            Textbook textbook = new Textbook(title, authors, isbn13, imageUrl);
+                            Textbook textbook = new Textbook(title, authors, isbn13, imageUrl, description);
                             textbooks.add(textbook);
                             success++;
                         } catch (JSONException e) {

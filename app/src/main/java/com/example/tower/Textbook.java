@@ -9,6 +9,7 @@ public class Textbook {
     private String uniqueID;
     private String imageUrl = "placeholder";
     private String isbn13;
+    String description;
 
     public Textbook() {
     }
@@ -25,29 +26,34 @@ public class Textbook {
         return uniqueID;
     }
 
-    public Textbook(String title, String author, long seller, double price, String uniqueID) {
+    public Textbook(String title, String author, long seller, double price, String uniqueID, String imageUrl, String isbn13, String description) {
         this.title = title;
         this.author = author;
         this.seller = seller;
         this.price = price;
         this.uniqueID = uniqueID;
+        this.imageUrl = imageUrl;
+        this.isbn13 = isbn13;
+        this.description = description;
     }
 
-    public Textbook(String title, String author, String isbn13, String imageUrl) {
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Textbook(String title, String author, String isbn13, String imageUrl, String description) {
         this.title = title;
         this.author = author;
         this.isbn13 = isbn13;
         this.imageUrl = imageUrl;
+        this.description = description;
         this.seller = 0;
-        this.price = 0;
     }
 
-    public Textbook(String title) {
-        this.title = title;
-        this.author = "";
-        this.seller = 0;
-        this.price = 0;
-    }
 
     public void setUniqueID(String uniqueID) {
         this.uniqueID = uniqueID;

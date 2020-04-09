@@ -11,22 +11,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".GoogleSuggestions"></activity>
-        <activity android:name=".SpecificTextbook" />
+        <activity
+            android:name=".AddBookFinal"
+            android:theme="@style/noAnimTheme"/>
+        <activity
+            android:name=".GoogleSuggestions"
+            android:theme="@style/noAnimTheme" />
+        <activity
+            android:name=".SpecificTextbook"
+            android:theme="@style/noAnimTheme" />
         <activity
             android:name=".AddBook"
+            android:theme="@style/noAnimTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity android:name=".ProfileLogin" />
         <activity
             android:name=".Profile"
+            android:theme="@style/noAnimTheme"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Search"
+            android:theme="@style/noAnimTheme"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/noAnimTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
