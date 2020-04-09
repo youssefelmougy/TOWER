@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -20,8 +19,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -50,7 +47,7 @@ public class ProfileLogin extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 Student student = dataSnapshot.getValue(Student.class);
-                TextView tv = findViewById(R.id.profile_login_title);
+                TextView tv = findViewById(R.id.suggestionsTitle);
                 String name = student.getName();
                 name = name.split(" ")[0];
                 tv.setText("Welcome Back, " + name);
@@ -121,21 +118,9 @@ public class ProfileLogin extends AppCompatActivity {
 
     public void onClickAdd (View view) {
         Intent intent = new Intent(this, AddBook.class);
-        startActivityForResult(intent, 2);
+        startActivity(intent);
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == 2) {
-            String title = data.getStringExtra("BOOK_TITLE");
-            String author = data.getStringExtra("BOOK_AUTHOR");
-            double price = data.getDoubleExtra("BOOK_PRICE", 0);
-            Textbook textbook = new Textbook(title, author, MainActivity.id, price);
-            addBook(textbook);
-            adapter.notifyDataSetChanged();
-        }
-    }
 
     public void addBook(Textbook textbook) {
         DatabaseReference reference = database.getReference().child("textbooks");

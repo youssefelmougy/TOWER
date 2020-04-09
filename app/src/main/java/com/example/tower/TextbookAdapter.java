@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.text.NumberFormat;
 
 import java.util.ArrayList;
@@ -23,11 +25,19 @@ public class TextbookAdapter extends BaseAdapter {
     private final Context mContext;
     private ArrayList<Textbook> textbooks;
     private String originalClass;
+    String searchQuery;
 
     public TextbookAdapter(Context mContext, ArrayList<Textbook> textbooks, String originalClass) {
         this.mContext = mContext;
         this.textbooks = textbooks;
         this.originalClass = originalClass;
+    }
+
+    public TextbookAdapter(Context mContext, ArrayList<Textbook> textbooks, String originalClass, String searchQuery) {
+        this.mContext = mContext;
+        this.textbooks = textbooks;
+        this.originalClass = originalClass;
+        this.searchQuery = searchQuery;
     }
 
     @Override
@@ -76,14 +86,23 @@ public class TextbookAdapter extends BaseAdapter {
         final TextView priceTextView = (TextView)convertView.findViewById(R.id.textview_book_price);
 
         // 4
-        imageView.setImageResource(R.drawable.textbook);
+        Picasso.get().load(book.getImageUrl()).placeholder(R.drawable.textbook).fit().into(imageView);
+
         nameTextView.setText(book.getTitle());
         authorTextView.setText(book.getAuthor());
-        sellerTextView.setText("" + book.getSeller());
 
-        NumberFormat formatter = NumberFormat.getCurrencyInstance();
-        double amt = book.getPrice();
-        priceTextView.setText("" + formatter.format(amt));
+        if (book.getSeller() == 0) {
+            sellerTextView.setText("");
+            priceTextView.setText("");
+        }
+        else {
+            sellerTextView.setText("" + book.getSeller());
+
+            NumberFormat formatter = NumberFormat.getCurrencyInstance();
+            double amt = book.getPrice();
+            priceTextView.setText("" + formatter.format(amt));
+        }
+
         // 3
 
 
@@ -99,6 +118,11 @@ public class TextbookAdapter extends BaseAdapter {
         bundle.putDouble("BOOK_PRICE", textbook.getPrice());
         bundle.putString("CLASS_FROM", "" + originalClass);
         bundle.putString("UNIQUE_ID", textbook.getUniqueID());
+        if(searchQuery != null) {
+            bundle.putString("SEARCH_QUERY", searchQuery);
+            bundle.putString("IMAGE_URL", textbook.getImageUrl());
+
+        }
         intent.putExtras(bundle);
         mContext.startActivity(intent);
     }

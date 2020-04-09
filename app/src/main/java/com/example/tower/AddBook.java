@@ -55,22 +55,18 @@ public class AddBook extends AppCompatActivity {
 
     public void onClickSubmit(View view) {
         EditText titleET = (EditText) findViewById(R.id.title_text);
-        EditText authorET = (EditText) findViewById(R.id.author_text);
-        EditText priceET = (EditText) findViewById(R.id.price_text);
-
         String title = titleET.getText().toString();
-        String author = authorET.getText().toString();
-        Double price = Double.parseDouble(priceET.getText().toString());
 
-        Intent intent = new Intent(this, ProfileLogin.class);
+        Intent intent = new Intent(this, GoogleSuggestions.class);
 
         intent.putExtra("BOOK_TITLE", title);
-        intent.putExtra("BOOK_AUTHOR", author);
-        intent.putExtra("BOOK_PRICE", price);
+        startActivity(intent);
+        finish();
+    }
 
-
-        Toast.makeText(this, "Added " + title, Toast.LENGTH_SHORT).show();
-        setResult(2, intent);
+    public void onClickCancel(View view) {
+        Intent intent = new Intent(this, ProfileLogin.class);
+        startActivity(intent);
         finish();
     }
 }
