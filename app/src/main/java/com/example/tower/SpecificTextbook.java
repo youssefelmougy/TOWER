@@ -180,7 +180,7 @@ public class SpecificTextbook extends AppCompatActivity {
             startActivity(intent);
             Toast.makeText(this, "Deleted " + title, Toast.LENGTH_SHORT).show();
         }
-        if(!MainActivity.loggedIn) {
+        else if(!MainActivity.loggedIn) {
             Intent intent = new Intent(this, Profile.class);
             startActivity(intent);
         }
