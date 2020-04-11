@@ -12,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -58,24 +59,17 @@ public class TextbookAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         // 1
         final Textbook book = textbooks.get(position);
-
+        Log.d("MikeC", book.getTitle());
         // 2
         if (convertView == null) {
             Log.d("Mike", "Hey I'm here!!!");
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
             convertView = layoutInflater.inflate(R.layout.textbook, parent, false);
 
-            LinearLayout layout = convertView.findViewById(R.id.textbook_layout);
 
-            layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    sendSpecificBook(book);
-                }
-            });
         }
         else {
-            Log.d("Mike", "No I'm actually over here!!!");
+            Log.d("Mike", "No I'm over here");
         }
 
         final ImageView imageView = (ImageView)convertView.findViewById(R.id.imageview_cover_art);
@@ -83,9 +77,18 @@ public class TextbookAdapter extends BaseAdapter {
         final TextView authorTextView = (TextView)convertView.findViewById(R.id.textview_book_author);
         final TextView sellerTextView = (TextView)convertView.findViewById(R.id.textview_book_seller);
         final TextView priceTextView = (TextView)convertView.findViewById(R.id.textview_book_price);
+        final LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.textbook_layout);
 
         // 4
         Picasso.get().load(book.getImageUrl()).placeholder(R.drawable.textbook).fit().into(imageView);
+
+        layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(mContext, "You clicked " + book.getTitle() + " by " + book.getAuthor(), Toast.LENGTH_SHORT).show();
+                sendSpecificBook(book);
+            }
+        });
 
         nameTextView.setText(book.getTitle());
         authorTextView.setText(book.getAuthor());
@@ -108,6 +111,9 @@ public class TextbookAdapter extends BaseAdapter {
         return convertView;
     }
 
+
+
+    //TODO Clicking on specific book doesn't always load the right book. FIX THAT.
     private void sendSpecificBook(Textbook textbook) {
         Intent intent = new Intent(mContext, SpecificTextbook.class);
         Bundle bundle = new Bundle();

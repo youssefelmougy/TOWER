@@ -111,7 +111,6 @@ public class Search extends AppCompatActivity {
 
                 for (Textbook i : orderedList)
                 {
-                    Log.d("LiamC", " " + i.getTitle());
 
                 }
                 TextbookAdapter adapter = new TextbookAdapter(context, orderedList, getLocalClassName());

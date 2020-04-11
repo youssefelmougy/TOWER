@@ -27,14 +27,13 @@ public class MainActivity extends AppCompatActivity {
 
     public static Boolean loggedIn = false;
     public static long id = 0;
+
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Log.d("ekim", "hello");
-        Log.d("Corona", "" + getLocalClassName());
         GridView gridView = findViewById(R.id.main_grid_view);
         displayTextbooks(this, gridView);
 
@@ -74,6 +73,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
     public void displayTextbooks(final Context context, final GridView gridView) {
         DatabaseReference reference = database.getReference().child("textbooks");
         reference.addValueEventListener(new ValueEventListener() {
@@ -82,7 +82,6 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<Textbook> textbooks = new ArrayList<>();
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     Textbook textbook = snapshot.getValue(Textbook.class);
-                    Log.d("ekim", textbook.getImageUrl());
                     textbooks.add(textbook);
                 }
                 gridView.setAdapter(new TextbookAdapter(context, textbooks, getLocalClassName()));

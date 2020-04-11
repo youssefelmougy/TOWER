@@ -170,6 +170,7 @@ public class SpecificTextbook extends AppCompatActivity {
     public void onClickReturn(View view) {
         Intent intent = goBack();
         startActivity(intent);
+        finish();
     }
 
     public void onClickContactDelete(View view) {
@@ -204,6 +205,7 @@ public class SpecificTextbook extends AppCompatActivity {
                 }
             });
         }
+        finish();
     }
 
     public Intent goBack() {
