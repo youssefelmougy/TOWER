@@ -91,7 +91,18 @@ public class TextbookAdapter extends BaseAdapter {
         });
 
         nameTextView.setText(book.getTitle());
-        authorTextView.setText(book.getAuthor());
+
+        String author = book.getAuthor();
+        String[] authorArr = author.split(", ");
+        if (authorArr.length > 5) {
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < 4; i++) {
+                sb.append(authorArr[i] + ", ");
+            }
+            sb.append("...");
+            author = sb.toString();
+        }
+        authorTextView.setText(author);
 
         if (book.getSeller() == 0) {
             sellerTextView.setText("");

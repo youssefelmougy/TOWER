@@ -30,7 +30,7 @@
         android:paddingLeft="8dp"
         android:paddingTop="4dp"
         android:paddingRight="8dp"
-        android:textSize="12sp"
+        android:textSize="14sp"
         android:textStyle="bold"
         tools:text="Are You My Mother" />
 
@@ -39,7 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:textSize="12sp"
+        android:textSize="14sp"
         tools:text="Dr. Seuss" />
 
     <TextView
@@ -47,17 +47,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_horizontal"
-        android:textSize="12sp"
+        android:textSize="14sp"
         tools:text="Seller" />
 
     <TextView
         android:id="@+id/textview_book_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="50dp"
         android:gravity="center_horizontal"
         android:textColor="#4CAF50"
-        android:textSize="12sp"
-        android:layout_marginBottom="50dp"
+        android:textSize="18sp"
         tools:text="$10.00" />
 
 </LinearLayout>
