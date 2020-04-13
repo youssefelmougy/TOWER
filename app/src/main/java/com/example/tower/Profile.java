@@ -174,6 +174,7 @@ public class Profile extends AppCompatActivity {
         Intent intent = new Intent(this, ProfileLogin.class);
         intent.putExtra("STUDENT_ID", id);
         startActivity(intent);
+        overridePendingTransition(0,0);
     }
 
     public void makeToast(String message) {

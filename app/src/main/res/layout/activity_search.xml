@@ -16,6 +16,7 @@
         app:itemBackground="@color/colorPrimary"
         app:itemTextColor="@drawable/selector"
         app:itemIconTint="@drawable/selector"
+        app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_navigation"/>
 
     <EditText

@@ -44,15 +44,16 @@ public class Search extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
 
+        mContext = this;
         gridView = (GridView) findViewById(R.id.search_grid_view);
         searchBox  = findViewById(R.id.search_box);
-        searchQuery = searchBox.getText().toString();
 
-        if(savedInstanceState != null) {
-        searchBox.setText("HAHAHA IT WORKED!!!!");
-            searchQuery = savedInstanceState.getString("SEARCH_QUERY");
+        if(getIntent().getStringExtra("SEARCH_QUERY") != null) {
+            searchQuery = getIntent().getStringExtra("SEARCH_QUERY");
+            findTextbooks(mContext, gridView, searchQuery);
+            searchBox.setText(searchQuery);
         }
-        mContext = this;
+
         //Initialize and Assign Variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -71,7 +72,7 @@ public class Search extends AppCompatActivity {
                     case R.id.search:
                         return true;
                     case R.id.profile:
-                        if (MainActivity.loggedIn == false) {
+                        if (!MainActivity.loggedIn) {
                             startActivity(new Intent(getApplicationContext(), Profile.class));
                             overridePendingTransition(0, 0);
                         } else {
@@ -108,12 +109,7 @@ public class Search extends AppCompatActivity {
                 }
 
                 ArrayList<Textbook> orderedList = orderBySimilarityMK2(textbooks, searchQuery);
-
-                for (Textbook i : orderedList)
-                {
-
-                }
-                TextbookAdapter adapter = new TextbookAdapter(context, orderedList, getLocalClassName());
+                TextbookAdapter adapter = new TextbookAdapter(context, orderedList, getLocalClassName(), searchQuery);
                 gridView.setAdapter(adapter);
 
             }
@@ -133,9 +129,10 @@ public class Search extends AppCompatActivity {
 
         for (Textbook i : originalList)
         {
+            String combinedInfo = i.getTitle()+i.getAuthor()+i.getIsbn13();
             LLCS = longestCommonSubstring
                     (
-                            i.getTitle().replaceAll("\\s","").toLowerCase().toCharArray(),
+                            combinedInfo.replaceAll("\\s","").toLowerCase().toCharArray(),
                             searchQuery.replaceAll("\\s","").toLowerCase().toCharArray()
                     );
 

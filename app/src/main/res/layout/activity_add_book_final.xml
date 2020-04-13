@@ -137,6 +137,7 @@
         app:itemIconTint="@drawable/selector"
         app:itemTextColor="@drawable/selector"
         app:menu="@menu/menu_navigation"
+        app:labelVisibilityMode="labeled"
         tools:layout_editor_absoluteY="768dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

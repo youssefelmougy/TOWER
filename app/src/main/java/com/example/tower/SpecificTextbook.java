@@ -170,6 +170,7 @@ public class SpecificTextbook extends AppCompatActivity {
     public void onClickReturn(View view) {
         Intent intent = goBack();
         startActivity(intent);
+        overridePendingTransition(0,0);
         finish();
     }
 
@@ -215,6 +216,9 @@ public class SpecificTextbook extends AppCompatActivity {
         }
         else if(originatingClass.equals("Search")) {
             intent = new Intent(this, Search.class);
+            if(searchQuery != null) {
+                intent.putExtra("SEARCH_QUERY", searchQuery);
+            }
         }
         else if(originatingClass.equals("GoogleSuggestions")) {
             intent = new Intent(this, GoogleSuggestions.class);
