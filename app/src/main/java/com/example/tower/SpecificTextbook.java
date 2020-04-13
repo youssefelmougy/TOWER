@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -116,7 +117,8 @@ public class SpecificTextbook extends AppCompatActivity {
         specificAuthor.setText(author);
         specificSeller.setText("Seller: " + seller);
         specificDescription.setText(description);
-        isbnText.setText("ISBN-13: " + isbn13);
+        String isbnHtml = "<b>ISBN-13: </b>" + isbn13;
+        isbnText.setText(Html.fromHtml(isbnHtml));
 
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         specificPrice.setText(formatter.format(price));
@@ -196,7 +198,7 @@ public class SpecificTextbook extends AppCompatActivity {
                     intent.setType("plain/text");
                     intent.putExtra(Intent.EXTRA_EMAIL, new String[] {email});
                     intent.putExtra(Intent.EXTRA_SUBJECT, "TOWER Offer: " + title);
-                    intent.putExtra(Intent.EXTRA_TEXT, "Hi, I'm interested in your book " + title);
+                    intent.putExtra(Intent.EXTRA_TEXT, "Hi, I'm interested in your book " + title + ".");
                     startActivity(Intent.createChooser(intent, ""));
                 }
 

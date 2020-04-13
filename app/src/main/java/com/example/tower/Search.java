@@ -92,7 +92,9 @@ public class Search extends AppCompatActivity {
     {
         searchBox = findViewById(R.id.search_box);
         searchQuery = searchBox.getText().toString();
-        findTextbooks(mContext, gridView, searchQuery);
+        if(!searchQuery.equals("")) {
+            findTextbooks(mContext, gridView, searchQuery);
+        }
 
     }
 

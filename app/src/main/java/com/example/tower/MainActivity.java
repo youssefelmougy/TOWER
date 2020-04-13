@@ -21,6 +21,8 @@ import org.w3c.dom.Text;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -80,10 +82,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<Textbook> textbooks = new ArrayList<>();
+                ArrayList<Textbook> textbooks1 = new ArrayList<>();
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     Textbook textbook = snapshot.getValue(Textbook.class);
                     textbooks.add(textbook);
                 }
+                Collections.reverse(textbooks);
+                int limit = 0;
+                for(Textbook book: textbooks) {
+                    if(limit > 20) break;
+                    textbooks1.add(book);
+                }
+                limit++;
                 gridView.setAdapter(new TextbookAdapter(context, textbooks, getLocalClassName()));
 
             }
