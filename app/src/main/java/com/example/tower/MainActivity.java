@@ -19,9 +19,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import org.w3c.dom.Text;
 
+import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -34,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Helper helper = new Helper(this);
+        //helper.floodDatabase(500);
+        DatabaseReference reference = database.getReference().child("textbooks");
+        //TODO Test what would happen if you added a 1000 books
         GridView gridView = findViewById(R.id.main_grid_view);
         displayTextbooks(this, gridView);
 
@@ -80,10 +87,18 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<Textbook> textbooks = new ArrayList<>();
+                Stack<Textbook> textbookStack = new Stack<>();
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     Textbook textbook = snapshot.getValue(Textbook.class);
-                    textbooks.add(textbook);
+                    textbookStack.push(textbook);
                 }
+                int max = 0;
+               for (int i = 0; i < textbookStack.size(); i++) {
+                   if (max == 20) break;
+                   textbooks.add(textbookStack.pop());
+                   max++;
+               }
+
                 gridView.setAdapter(new TextbookAdapter(context, textbooks, getLocalClassName()));
 
             }

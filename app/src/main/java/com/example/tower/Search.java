@@ -133,9 +133,10 @@ public class Search extends AppCompatActivity {
 
         for (Textbook i : originalList)
         {
+            String allInfo = i.getTitle() + i.getAuthor()+i.getIsbn13();
             LLCS = longestCommonSubstring
                     (
-                            i.getTitle().replaceAll("\\s","").toLowerCase().toCharArray(),
+                            allInfo.replaceAll("\\s","").toLowerCase().toCharArray(),
                             searchQuery.replaceAll("\\s","").toLowerCase().toCharArray()
                     );
 

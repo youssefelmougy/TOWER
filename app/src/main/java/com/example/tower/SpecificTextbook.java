@@ -41,6 +41,7 @@ public class SpecificTextbook extends AppCompatActivity {
     String imageUrl;
     String isbn13;
     long seller;
+    String condition;
     LinearLayout linearLayout;
     Context context;
     @Override
@@ -62,6 +63,7 @@ public class SpecificTextbook extends AppCompatActivity {
         imageUrl = extras.getString("IMAGE_URL");
         description = extras.getString("BOOK_DESCRIPTION");
         isbn13 = extras.getString("BOOK_ISBN");
+        condition = extras.getString("BOOK_CONDITION");
         if(extras.getString("SEARCH_QUERY") != null) {
             searchQuery = extras.getString("SEARCH_QUERY");
         }
@@ -71,6 +73,7 @@ public class SpecificTextbook extends AppCompatActivity {
         TextView specificSeller = (TextView)findViewById(R.id.specific_seller);
         TextView specificPrice = (TextView)findViewById(R.id.specific_price);
         TextView specificDescription = (TextView)findViewById(R.id.specific_description);
+        TextView specificCondition = (TextView) findViewById(R.id.condition_textview);
         TextView isbnText = findViewById(R.id.isbn_textview);
 
         Button removeOrContact = (Button) findViewById(R.id.removeOrContact);
@@ -88,6 +91,7 @@ public class SpecificTextbook extends AppCompatActivity {
             linearLayout.removeView(removeOrContact);
             linearLayout.removeView(specificPrice);
             linearLayout.removeView(specificSeller);
+            linearLayout.removeView(specificCondition);
             Button button = new Button(this);
             button.setText("This Looks Like My Book");
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -117,6 +121,8 @@ public class SpecificTextbook extends AppCompatActivity {
         specificSeller.setText("Seller: " + seller);
         specificDescription.setText(description);
         isbnText.setText("ISBN-13: " + isbn13);
+        specificCondition.setText("Condition: " + condition);
+
 
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         specificPrice.setText(formatter.format(price));

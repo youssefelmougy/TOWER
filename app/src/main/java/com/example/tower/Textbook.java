@@ -10,6 +10,7 @@ public class Textbook {
     private String imageUrl = "placeholder";
     private String isbn13;
     String description;
+    String condition;
 
     public Textbook() {
     }
@@ -26,7 +27,15 @@ public class Textbook {
         return uniqueID;
     }
 
-    public Textbook(String title, String author, long seller, double price, String uniqueID, String imageUrl, String isbn13, String description) {
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
+    public Textbook(String title, String author, long seller, double price, String uniqueID, String imageUrl, String isbn13, String description, String condition) {
         this.title = title;
         this.author = author;
         this.seller = seller;
@@ -35,6 +44,7 @@ public class Textbook {
         this.imageUrl = imageUrl;
         this.isbn13 = isbn13;
         this.description = description;
+        this.condition = condition;
     }
 
     public String getDescription() {
