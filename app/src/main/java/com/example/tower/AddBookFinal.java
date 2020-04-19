@@ -5,9 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
@@ -15,7 +20,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.NumberFormat;
 
-public class AddBookFinal extends AppCompatActivity {
+public class AddBookFinal extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     EditText titleET;
@@ -24,6 +29,8 @@ public class AddBookFinal extends AppCompatActivity {
     EditText isbnET;
     EditText priceET;
     String imageUrl;
+    Spinner spinner;
+    String condition;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,11 +57,20 @@ public class AddBookFinal extends AppCompatActivity {
         descriptionET = findViewById(R.id.add_book_description);
         isbnET = findViewById(R.id.add_book_isbn);
         priceET = findViewById(R.id.add_book_price);
+        spinner = (Spinner) findViewById(R.id.spinner);
 
         titleET.setText(title);
         authorET.setText(author);
         descriptionET.setText(description);
         isbnET.setText(isbn13);
+
+        ArrayAdapter<CharSequence> conditionAdapter = ArrayAdapter.createFromResource(this, R.array.condition_options, android.R.layout.simple_spinner_item);
+        conditionAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner.setAdapter(conditionAdapter);
+        spinner.setSelection(1);
+        spinner.setOnItemSelectedListener(this);
+
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -91,7 +107,7 @@ public class AddBookFinal extends AppCompatActivity {
         String description = descriptionET.getText().toString();
         String isbn = isbnET.getText().toString();
         Double price = Double.parseDouble(priceET.getText().toString());
-        Textbook textbook = new Textbook(title, author, MainActivity.id, price, key, imageUrl, isbn, description);
+        Textbook textbook = new Textbook(title, author, MainActivity.id, price, key, imageUrl, isbn, description, condition);
 
         reference.child(key).child("title").setValue(textbook.getTitle());
         reference.child(key).child("author").setValue(textbook.getAuthor());
@@ -101,10 +117,21 @@ public class AddBookFinal extends AppCompatActivity {
         reference.child(key).child("imageUrl").setValue(textbook.getImageUrl());
         reference.child(key).child("isbn13").setValue(textbook.getIsbn13());
         reference.child(key).child("uniqueID").setValue(key);
+        reference.child(key).child("condition").setValue(textbook.getCondition());
 
         Intent intent = new Intent(this, ProfileLogin.class);
         intent.putExtra("ADDED_BOOK_MESSAGE", "Added " + textbook.getTitle());
         startActivity(intent);
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        String condition = parent.getItemAtPosition(position).toString();
+        this.condition = condition;
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+
+    }
 }

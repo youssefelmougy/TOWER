@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
+import org.w3c.dom.Text;
+
 import java.text.NumberFormat;
 
 import java.util.ArrayList;
@@ -93,6 +95,7 @@ public class TextbookAdapter extends BaseAdapter {
         nameTextView.setText(book.getTitle());
 
         String author = book.getAuthor();
+        if (author == null) author = "No Author";
         String[] authorArr = author.split(", ");
         if (authorArr.length > 5) {
             StringBuilder sb = new StringBuilder();
@@ -124,7 +127,6 @@ public class TextbookAdapter extends BaseAdapter {
 
 
 
-    //TODO Clicking on specific book doesn't always load the right book. FIX THAT.
     private void sendSpecificBook(Textbook textbook) {
         Intent intent = new Intent(mContext, SpecificTextbook.class);
         Bundle bundle = new Bundle();
@@ -137,6 +139,7 @@ public class TextbookAdapter extends BaseAdapter {
         bundle.putString("IMAGE_URL", textbook.getImageUrl());
         bundle.putString("BOOK_DESCRIPTION", textbook.getDescription());
         bundle.putString("BOOK_ISBN", textbook.getIsbn13());
+        bundle.putString("BOOK_CONDITION", textbook.getCondition());
         if(searchQuery != null) {
             bundle.putString("SEARCH_QUERY", searchQuery);
 

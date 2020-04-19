@@ -3,4 +3,10 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string-array name="condition_options">
+        <item>Like New</item>
+        <item>Good</item>
+        <item>Poor</item>
+    </string-array>
 </resources>

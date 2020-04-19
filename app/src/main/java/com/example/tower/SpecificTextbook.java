@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Html;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -42,6 +41,7 @@ public class SpecificTextbook extends AppCompatActivity {
     String imageUrl;
     String isbn13;
     long seller;
+    String condition;
     LinearLayout linearLayout;
     Context context;
     @Override
@@ -63,6 +63,7 @@ public class SpecificTextbook extends AppCompatActivity {
         imageUrl = extras.getString("IMAGE_URL");
         description = extras.getString("BOOK_DESCRIPTION");
         isbn13 = extras.getString("BOOK_ISBN");
+        condition = extras.getString("BOOK_CONDITION");
         if(extras.getString("SEARCH_QUERY") != null) {
             searchQuery = extras.getString("SEARCH_QUERY");
         }
@@ -72,6 +73,7 @@ public class SpecificTextbook extends AppCompatActivity {
         TextView specificSeller = (TextView)findViewById(R.id.specific_seller);
         TextView specificPrice = (TextView)findViewById(R.id.specific_price);
         TextView specificDescription = (TextView)findViewById(R.id.specific_description);
+        TextView specificCondition = (TextView) findViewById(R.id.condition_textview);
         TextView isbnText = findViewById(R.id.isbn_textview);
 
         Button removeOrContact = (Button) findViewById(R.id.removeOrContact);
@@ -89,6 +91,7 @@ public class SpecificTextbook extends AppCompatActivity {
             linearLayout.removeView(removeOrContact);
             linearLayout.removeView(specificPrice);
             linearLayout.removeView(specificSeller);
+            linearLayout.removeView(specificCondition);
             Button button = new Button(this);
             button.setText("This Looks Like My Book");
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
@@ -117,8 +120,9 @@ public class SpecificTextbook extends AppCompatActivity {
         specificAuthor.setText(author);
         specificSeller.setText("Seller: " + seller);
         specificDescription.setText(description);
-        String isbnHtml = "<b>ISBN-13: </b>" + isbn13;
-        isbnText.setText(Html.fromHtml(isbnHtml));
+        isbnText.setText("ISBN-13: " + isbn13);
+        specificCondition.setText("Condition: " + condition);
+
 
         NumberFormat formatter = NumberFormat.getCurrencyInstance();
         specificPrice.setText(formatter.format(price));
@@ -172,7 +176,6 @@ public class SpecificTextbook extends AppCompatActivity {
     public void onClickReturn(View view) {
         Intent intent = goBack();
         startActivity(intent);
-        overridePendingTransition(0,0);
         finish();
     }
 
@@ -198,7 +201,7 @@ public class SpecificTextbook extends AppCompatActivity {
                     intent.setType("plain/text");
                     intent.putExtra(Intent.EXTRA_EMAIL, new String[] {email});
                     intent.putExtra(Intent.EXTRA_SUBJECT, "TOWER Offer: " + title);
-                    intent.putExtra(Intent.EXTRA_TEXT, "Hi, I'm interested in your book " + title + ".");
+                    intent.putExtra(Intent.EXTRA_TEXT, "Hi, I'm interested in your book " + title);
                     startActivity(Intent.createChooser(intent, ""));
                 }
 
@@ -218,9 +221,6 @@ public class SpecificTextbook extends AppCompatActivity {
         }
         else if(originatingClass.equals("Search")) {
             intent = new Intent(this, Search.class);
-            if(searchQuery != null) {
-                intent.putExtra("SEARCH_QUERY", searchQuery);
-            }
         }
         else if(originatingClass.equals("GoogleSuggestions")) {
             intent = new Intent(this, GoogleSuggestions.class);

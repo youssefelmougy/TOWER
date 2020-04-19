@@ -67,8 +67,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginTop="10dp"
-                android:textSize="18sp"
+                android:layout_marginTop="0dp"
+                android:textSize="24sp"
                 android:textStyle="bold"
                 tools:text="Price: $0.00" />
 
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
-                android:textSize="14sp"
+                android:textSize="18sp"
                 tools:text="Seller: 000000000" />
 
             <Button
@@ -97,8 +97,30 @@
                 android:id="@+id/isbn_textview"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:text="ISBN-13: " />
+                android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:text="ISBN-13: "
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/condition_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:text="Condition: "
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/removeOrContact"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:onClick="onClickContactDelete"
+                android:padding="10dp"
+                android:text="Contact this Seller"
+                android:textColorLink="#000000" />
 
             <TextView
                 android:id="@+id/textView"
