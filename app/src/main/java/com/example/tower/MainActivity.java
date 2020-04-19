@@ -38,9 +38,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Helper helper = new Helper(this);
+        //helper.deleteAllBooks();
         //helper.floodDatabase(500);
         DatabaseReference reference = database.getReference().child("textbooks");
-        //TODO Test what would happen if you added a 1000 books
         GridView gridView = findViewById(R.id.main_grid_view);
         displayTextbooks(this, gridView);
 
