@@ -81,18 +81,6 @@
                 android:textSize="18sp"
                 tools:text="Seller: 000000000" />
 
-            <Button
-                android:id="@+id/removeOrContact"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="20dp"
-                android:onClick="onClickContactDelete"
-                android:padding="10dp"
-                android:text="Contact this Seller"
-                android:textColorLink="#000000" />
-
             <TextView
                 android:id="@+id/isbn_textview"
                 android:layout_width="wrap_content"
