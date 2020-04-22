@@ -14,6 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.FirebaseDatabase;
 
 import static com.example.tower.MainActivity.loggedIn;
+import static com.example.tower.ProfileLogin.fa;
 
 public class Settings extends AppCompatActivity {
     FirebaseDatabase database;
@@ -77,6 +78,7 @@ public class Settings extends AppCompatActivity {
             MainActivity.id = 0;
             Intent intent = new Intent(this, Profile.class);
             startActivity(intent);
+            fa.finish();
             finish();
             Toast.makeText(this, "Signed Out Successfully", Toast.LENGTH_SHORT).show();
         }

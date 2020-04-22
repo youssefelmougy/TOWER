@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -39,11 +40,13 @@ public class ProfileLogin extends AppCompatActivity {
     TextView firstBookAdd;
     ImageView firstArrow;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    public static Activity fa;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_login);
+        fa = this;
         gridView = (GridView)findViewById(R.id.main_grid_view);
         studentID = MainActivity.id;
         mainLayout = findViewById(R.id.profile_login_layout);
