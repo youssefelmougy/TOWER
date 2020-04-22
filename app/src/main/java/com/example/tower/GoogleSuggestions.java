@@ -85,6 +85,10 @@ public class GoogleSuggestions extends AppCompatActivity {
                         return true;
                     case R.id.profile:
                         return true;
+                    case R.id.settings:
+                        startActivity(new Intent(getApplicationContext(), Settings.class));
+                        overridePendingTransition(0,0);
+                        return true;
                 }
 
                 return false;

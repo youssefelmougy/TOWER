@@ -5,32 +5,40 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
-public class AddBook extends AppCompatActivity {
-
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-
+public class ConditionDescription extends AppCompatActivity {
+    String originatingClass;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_add_book);
+        setContentView(R.layout.activity_condition_description);
+        Intent intent = getIntent();
+        if(intent != null) {
+            if(intent.getStringExtra("ORIGINAL_CLASS") != null) {
+                originatingClass = intent.getStringExtra("ORIGINAL_CLASS");
+            }
+
+        }
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        //Set Home Selected
-        bottomNavigationView.setSelectedItemId(R.id.profile);
+        if(originatingClass.equals("MainActivity")) {
+            bottomNavigationView.setSelectedItemId(R.id.home);
+        }
+        else if (originatingClass.equals("Profile") || originatingClass.equals("ProfileLogin")){
+            bottomNavigationView.setSelectedItemId(R.id.profile);
+        }
 
+        else if(originatingClass.equals("GoogleSuggestions")) {
+            bottomNavigationView.setSelectedItemId(R.id.profile);
+        }
+        else {
+            bottomNavigationView.setSelectedItemId(R.id.search);
+        }
         //Perform ItemSelectedListener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -45,6 +53,14 @@ public class AddBook extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.profile:
+                        if(MainActivity.loggedIn){
+                            startActivity(new Intent(getApplicationContext(), ProfileLogin.class));
+                            overridePendingTransition(0,0);
+                        }
+                        else {
+                            startActivity(new Intent(getApplicationContext(), Profile.class));
+                            overridePendingTransition(0,0);
+                        }
                         return true;
                     case R.id.settings:
                         startActivity(new Intent(getApplicationContext(), Settings.class));
@@ -57,22 +73,9 @@ public class AddBook extends AppCompatActivity {
         });
     }
 
-    public void onClickSubmit(View view) {
-        EditText titleET = (EditText) findViewById(R.id.title_text);
-        String title = titleET.getText().toString();
-
-        Intent intent = new Intent(this, GoogleSuggestions.class);
-
-        intent.putExtra("BOOK_TITLE", title);
-        startActivity(intent);
-        finish();
-    }
-
-
-    public void onClickCancel(View view) {
-        Intent intent = new Intent(this, ProfileLogin.class);
-        startActivity(intent);
-        finish();
+    public void goBack(View view) {
+        //TODO MAKE EVERY GO BACK X BUTTON USE THE METHOD HERE
+        onBackPressed();
         overridePendingTransition(0,0);
     }
 }

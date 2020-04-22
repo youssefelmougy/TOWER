@@ -11,7 +11,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Settings"></activity>
+        <activity android:name=".ConditionDescription"
+            android:theme="@style/noAnimTheme"
+            />
+        <activity android:name=".Settings" />
         <activity
             android:name=".AddBookFinal"
             android:theme="@style/noAnimTheme" />

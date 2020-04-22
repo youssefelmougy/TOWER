@@ -11,6 +11,8 @@ import android.view.MenuItem;
 import android.widget.GridView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static Boolean loggedIn = false;
     public static long id = 0;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     @Override
@@ -39,7 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
         Helper helper = new Helper(this);
         //helper.deleteAllBooks();
-        //helper.floodDatabase(500);
+        //helper.floodDatabase(20);
+
+
         DatabaseReference reference = database.getReference().child("textbooks");
         GridView gridView = findViewById(R.id.main_grid_view);
         displayTextbooks(this, gridView);
@@ -72,6 +77,10 @@ public class MainActivity extends AppCompatActivity {
                             overridePendingTransition(0,0);
                         }
                         return true;
+                    case R.id.settings:
+                        startActivity(new Intent(getApplicationContext(), Settings.class));
+                        overridePendingTransition(0,0);
+                        return true;
                 }
 
                 return false;
@@ -80,7 +89,38 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            final String uID = user.getUid();
+            Log.d("MikeP", uID);
+            DatabaseReference reference1 = database.getReference().child("students");
+            reference1.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                        if (uID == null) break;
+                        if (snapshot.child("uID").getValue() == null) break;
+                        if (snapshot.child("uID").getValue().toString().equals(uID)) {
+                            String id = snapshot.child("id").getValue().toString();
+                            MainActivity.loggedIn = true;
+                            MainActivity.id = Long.parseLong(id);
+                            Log.d("MikeP", id);
 
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        };
+
+    }
     public void displayTextbooks(final Context context, final GridView gridView) {
         DatabaseReference reference = database.getReference().child("textbooks");
         reference.addValueEventListener(new ValueEventListener() {
@@ -101,6 +141,26 @@ public class MainActivity extends AppCompatActivity {
 
                 gridView.setAdapter(new TextbookAdapter(context, textbooks, getLocalClassName()));
 
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void getHID(final String uID) {
+        DatabaseReference reference1 = database.getReference().child("students");
+        reference1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                    if (snapshot.child("uID").getValue().toString().equals(uID)) {
+                        String id = snapshot.child("id").getValue().toString();
+
+                    }
+                }
             }
 
             @Override

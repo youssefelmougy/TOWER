@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class SpecificTextbook extends AppCompatActivity {
     String uniqueID;
     Boolean isSeller = false;
     String title;
+    String author;
     String description;
     String searchQuery;
     String imageUrl;
@@ -43,6 +45,7 @@ public class SpecificTextbook extends AppCompatActivity {
     long seller;
     String condition;
     LinearLayout linearLayout;
+    LinearLayout horizontalLayout;
     Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +53,7 @@ public class SpecificTextbook extends AppCompatActivity {
         setContentView(R.layout.activity_specific_textbook);
 
         linearLayout = findViewById(R.id.linear_layout);
+        horizontalLayout = findViewById(R.id.horizontal_layout);
         Intent intent = getIntent();
         Bundle extras = intent.getExtras();
         context = this;
@@ -57,7 +61,7 @@ public class SpecificTextbook extends AppCompatActivity {
         originatingClass = extras.getString("CLASS_FROM");
         uniqueID = extras.getString("UNIQUE_ID");
         title = extras.getString("BOOK_TITLE");
-        final String author = extras.getString("BOOK_AUTHOR");
+        author = extras.getString("BOOK_AUTHOR");
         seller = extras.getLong("BOOK_SELLER");
         Double price = extras.getDouble("BOOK_PRICE");
         imageUrl = extras.getString("IMAGE_URL");
@@ -73,10 +77,13 @@ public class SpecificTextbook extends AppCompatActivity {
         TextView specificSeller = (TextView)findViewById(R.id.specific_seller);
         TextView specificPrice = (TextView)findViewById(R.id.specific_price);
         TextView specificDescription = (TextView)findViewById(R.id.specific_description);
+        TextView descripHeader = (TextView) findViewById(R.id.descrip_header);
         TextView specificCondition = (TextView) findViewById(R.id.condition_textview);
         TextView isbnText = findViewById(R.id.isbn_textview);
+        ImageButton conditionButton = findViewById(R.id.conditionButton);
 
         Button removeOrContact = (Button) findViewById(R.id.removeOrContact);
+        Button correctBook = (Button) findViewById(R.id.correctBook);
         ImageView bookCover = (ImageView) findViewById(R.id.book_cover);
 
         if(seller == MainActivity.id) {
@@ -91,28 +98,12 @@ public class SpecificTextbook extends AppCompatActivity {
             linearLayout.removeView(removeOrContact);
             linearLayout.removeView(specificPrice);
             linearLayout.removeView(specificSeller);
-            linearLayout.removeView(specificCondition);
-            Button button = new Button(this);
-            button.setText("This Looks Like My Book");
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.MATCH_PARENT);
-            button.setLayoutParams(params);
-            params.gravity=Gravity.CENTER;
-            linearLayout.addView(button);
-            button.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(context, AddBookFinal.class);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("BOOK_TITLE", title);
-                    bundle.putString("BOOK_AUTHOR", author);
-                    bundle.putString("BOOK_ISBN", isbn13);
-                    bundle.putString("BOOK_DESCRIPTION", description);
-                    bundle.putString("IMAGE_URL", imageUrl);
-                    intent.putExtras(bundle);
-                    startActivity(intent);
-                }
-            });
+            linearLayout.removeView(horizontalLayout);
             Picasso.get().load(imageUrl).fit().into(bookCover);
+        }
+
+        else {
+            linearLayout.removeView(correctBook);
         }
 
         Picasso.get().load(imageUrl).placeholder(R.drawable.textbook).fit().into(bookCover);
@@ -133,7 +124,7 @@ public class SpecificTextbook extends AppCompatActivity {
         if(originatingClass.equals("MainActivity")) {
             bottomNavigationView.setSelectedItemId(R.id.home);
         }
-        else if (originatingClass.equals("Profile")){
+        else if (originatingClass.equals("Profile") || originatingClass.equals("ProfileLogin")){
             bottomNavigationView.setSelectedItemId(R.id.profile);
         }
 
@@ -166,6 +157,10 @@ public class SpecificTextbook extends AppCompatActivity {
                             overridePendingTransition(0,0);
                         }
                         return true;
+                    case R.id.settings:
+                        startActivity(new Intent(getApplicationContext(), Settings.class));
+                        overridePendingTransition(0,0);
+                        return true;
                 }
 
                 return false;
@@ -174,9 +169,9 @@ public class SpecificTextbook extends AppCompatActivity {
     }
 
     public void onClickReturn(View view) {
-        Intent intent = goBack();
-        startActivity(intent);
+        onBackPressed();
         finish();
+        overridePendingTransition(0,0);
     }
 
     public void onClickContactDelete(View view) {
@@ -185,11 +180,13 @@ public class SpecificTextbook extends AppCompatActivity {
             ref.removeValue();
             Intent intent = goBack();
             startActivity(intent);
+            overridePendingTransition(0,0);
             Toast.makeText(this, "Deleted " + title, Toast.LENGTH_SHORT).show();
         }
         else if(!MainActivity.loggedIn) {
             Intent intent = new Intent(this, Profile.class);
             startActivity(intent);
+            overridePendingTransition(0,0);
         }
         else {
             DatabaseReference newRef = database.getReference().child("students/" + seller);
@@ -232,5 +229,24 @@ public class SpecificTextbook extends AppCompatActivity {
             intent = new Intent(this, ProfileLogin.class);
         }
         return intent;
+    }
+
+    public void onClickConditionButton(View view) {
+        Intent intent = new Intent (this, ConditionDescription.class);
+        intent.putExtra("ORIGINAL_CLASS", originatingClass);
+        startActivity(intent);
+        overridePendingTransition(0,0);
+    }
+
+    public void onClickCorrectBook(View view) {
+        Intent intent = new Intent(context, AddBookFinal.class);
+        Bundle bundle = new Bundle();
+        bundle.putString("BOOK_TITLE", title);
+        bundle.putString("BOOK_AUTHOR", author);
+        bundle.putString("BOOK_ISBN", isbn13);
+        bundle.putString("BOOK_DESCRIPTION", description);
+        bundle.putString("IMAGE_URL", imageUrl);
+        intent.putExtras(bundle);
+        startActivity(intent);
     }
 }

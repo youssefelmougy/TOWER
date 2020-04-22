@@ -1,6 +1,5 @@
 package com.example.tower;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,11 +11,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.text.NumberFormat;
 
@@ -77,7 +73,7 @@ public class TextbookAdapter extends BaseAdapter {
         final ImageView imageView = (ImageView)convertView.findViewById(R.id.imageview_cover_art);
         final TextView nameTextView = (TextView)convertView.findViewById(R.id.textview_book_name);
         final TextView authorTextView = (TextView)convertView.findViewById(R.id.textview_book_author);
-        final TextView sellerTextView = (TextView)convertView.findViewById(R.id.textview_book_seller);
+        final TextView conditionTextView = (TextView)convertView.findViewById(R.id.textview_book_condition);
         final TextView priceTextView = (TextView)convertView.findViewById(R.id.textview_book_price);
         final LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.textbook_layout);
 
@@ -108,11 +104,11 @@ public class TextbookAdapter extends BaseAdapter {
         authorTextView.setText(author);
 
         if (book.getSeller() == 0) {
-            sellerTextView.setText("");
+            conditionTextView.setText("");
             priceTextView.setText("");
         }
         else {
-            sellerTextView.setText("" + book.getSeller());
+            conditionTextView.setText("Condition: " + book.getCondition());
 
             NumberFormat formatter = NumberFormat.getCurrencyInstance();
             double amt = book.getPrice();

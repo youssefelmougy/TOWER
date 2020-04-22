@@ -92,6 +92,10 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
                         return true;
                     case R.id.profile:
                         return true;
+                    case R.id.settings:
+                        startActivity(new Intent(getApplicationContext(), Settings.class));
+                        overridePendingTransition(0,0);
+                        return true;
                 }
 
                 return false;
@@ -133,5 +137,12 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
 
+    }
+
+    public void onClickConditionButton(View view) {
+        Intent intent = new Intent (this, ConditionDescription.class);
+        intent.putExtra("ORIGINAL_CLASS", "ProfileLogin");
+        startActivity(intent);
+        overridePendingTransition(0,0);
     }
 }

@@ -5,16 +5,22 @@ public class Student {
     private String email;
     private long id;
     private String password;
+    private String uID;
 
     public Student() {
 
     }
 
-    public Student(String name, String email, long id, String password) {
+    public String getuID() {
+        return uID;
+    }
+
+    public Student(String name, String email, long id, String password, String uID) {
         this.name = name;
         this.email = email;
         this.id = id;
         this.password = password;
+        this.uID = uID;
     }
 
     public void setName(String name) {

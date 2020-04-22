@@ -7,14 +7,20 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,6 +31,7 @@ import com.google.firebase.database.ValueEventListener;
 public class Profile extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
+    FirebaseAuth mAuth;
     TabLayout tabLayout;
     ViewPager viewPager;
 
@@ -36,6 +43,7 @@ public class Profile extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.viewPager);
 
+        mAuth = FirebaseAuth.getInstance();
         final TabAdapter tabAdapter = new TabAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(tabAdapter);
 
@@ -77,11 +85,22 @@ public class Profile extends AppCompatActivity {
                         return true;
                     case R.id.profile:
                         return true;
+                    case R.id.settings:
+                        startActivity(new Intent(getApplicationContext(), Settings.class));
+                        overridePendingTransition(0,0);
+                        return true;
                 }
 
                 return false;
             }
         });
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
     }
 
     public void onClickLogin(View view) {
@@ -98,22 +117,25 @@ public class Profile extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.exists()) {
                     DatabaseReference newRef = myRef.child(user);
-
                     newRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Student student = dataSnapshot.getValue(Student.class);
-                            String passActual = student.getPassword();
-                            if (password.equals(passActual)) {
-                                result.setTextColor(Color.GREEN);
-                                result.setText("Correct Username and Password!!!");
-                                MainActivity.loggedIn = true;
-                                MainActivity.id = student.getId();
-                                login(student.getId());
-                            } else {
-                                result.setTextColor(Color.RED);
-                                result.setText("Incorrect Password!!");
-                            }
+                            final Student student = dataSnapshot.getValue(Student.class);
+                            String email = student.getEmail();
+                            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(Profile.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if(task.isSuccessful()) {
+                                        long id = student.getId();
+                                        MainActivity.id = id;
+                                        MainActivity.loggedIn = true;
+                                        login(id);
+                                    }
+                                    else {
+                                        result.setText("Invalid User ID or Password");
+                                    }
+                                }
+                            });
                         }
 
                         @Override
@@ -147,24 +169,40 @@ public class Profile extends AppCompatActivity {
         EditText passInput = findViewById(R.id.add_book_description);
         EditText passRepeat = findViewById(R.id.add_book_price);
 
-        Long id = Long.parseLong(idInput.getText().toString());
-        String fullName = nameInput.getText().toString();
-        String email = emailInput.getText().toString();
-        String password = passInput.getText().toString();
-        String passwordRepeat = passRepeat.getText().toString();
+        final Long id = Long.parseLong(idInput.getText().toString());
+        final String fullName = nameInput.getText().toString();
+        final String email = emailInput.getText().toString();
+        final String password = passInput.getText().toString();
+        final String passwordRepeat = passRepeat.getText().toString();
 
         if(!password.equals(passwordRepeat)) {
             makeToast("Please enter the same password");
         }
 
+        //TODO IMPLEMENT ACTUAL LOGIN
+        //TODO Use this https://firebase.googleblog.com/2017/02/email-verification-in-firebase-auth.html
         else {
-            ref.child("" + id).child("id").setValue(id);
-            ref.child("" + id).child("name").setValue(fullName);
-            ref.child("" + id).child("email").setValue(email);
-            ref.child("" + id).child("password").setValue(password);
-            MainActivity.loggedIn = true;
-            MainActivity.id = id;
-            login(id);
+            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    Log.d("MikeX", "success?");
+                    if(task.isSuccessful()) {
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        ref.child("" + id).child("id").setValue(id);
+                        ref.child("" + id).child("name").setValue(fullName);
+                        ref.child("" + id).child("email").setValue(email);
+                        ref.child("" + id).child("password").setValue(password);
+                        ref.child("" + id).child("uID").setValue(user.getUid());
+                        MainActivity.loggedIn = true;
+                        MainActivity.id = id;
+                        login(id);
+                    }
+                    else {
+                        Log.d("MikeX", "" + task.getException());
+                        Toast.makeText(Profile.this, "Invalid Email Address.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
         }
 
 

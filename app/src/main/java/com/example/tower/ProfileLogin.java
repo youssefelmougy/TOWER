@@ -3,6 +3,7 @@ package com.example.tower;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +12,11 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,12 +35,19 @@ public class ProfileLogin extends AppCompatActivity {
     GridView gridView;
     TextbookAdapter adapter;
     long studentID = 0;
+    ConstraintLayout mainLayout;
+    TextView firstBookAdd;
+    ImageView firstArrow;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_login);
         gridView = (GridView)findViewById(R.id.main_grid_view);
         studentID = MainActivity.id;
+        mainLayout = findViewById(R.id.profile_login_layout);
+        firstBookAdd = findViewById(R.id.add_first_book_text);
+        firstArrow = findViewById(R.id.imageView);
+        Log.d("MikeX", "" + studentID);
 
         displayTextbooks(this, gridView);
 
@@ -81,6 +91,10 @@ public class ProfileLogin extends AppCompatActivity {
                         return true;
                     case R.id.profile:
                         return true;
+                    case R.id.settings:
+                        startActivity(new Intent(getApplicationContext(), Settings.class));
+                        overridePendingTransition(0,0);
+                        return true;
                 }
 
                 return false;
@@ -106,6 +120,10 @@ public class ProfileLogin extends AppCompatActivity {
                     Log.d("MikeC", "" + textbooks.size());
                 }
                 adapter = new TextbookAdapter(context, textbooks,getLocalClassName());
+                if (textbooks.size() == 0) {
+                    firstBookAdd.setVisibility(View.VISIBLE);
+                    firstArrow.setVisibility(View.VISIBLE);
+                }
                 gridView.setAdapter(adapter);
 
             }
@@ -132,6 +150,15 @@ public class ProfileLogin extends AppCompatActivity {
         reference.child(key).child("seller").setValue(MainActivity.id);
         reference.child(key).child("uniqueID").setValue(key);
 
+    }
+
+    public void signOutButton(View view) {
+        FirebaseAuth.getInstance().signOut();
+        MainActivity.loggedIn = false;
+        MainActivity.id = 0;
+        Intent intent = new Intent(this, Profile.class);
+        startActivity(intent);
+        finish();
     }
 
 }

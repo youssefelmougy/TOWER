@@ -90,14 +90,32 @@
                 android:text="ISBN-13: "
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/condition_textview"
+            <LinearLayout
+                android:id="@+id/horizontal_layout"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:layout_margin="8dp"
-                android:text="Condition: "
-                android:textSize="18sp" />
+                android:orientation="horizontal">
+
+                <ImageButton
+                    android:id="@+id/conditionButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:onClick="onClickConditionButton"
+                    app:srcCompat="@drawable/ic_info" />
+
+                <TextView
+                    android:id="@+id/condition_textview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    android:textSize="18sp"
+                    tools:text="Condition: " />
+            </LinearLayout>
 
             <Button
                 android:id="@+id/removeOrContact"
@@ -110,8 +128,19 @@
                 android:text="Contact this Seller"
                 android:textColorLink="#000000" />
 
+            <Button
+                android:id="@+id/correctBook"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="5dp"
+                android:onClick="onClickCorrectBook"
+                android:padding="10dp"
+                android:text="This Looks Like My Book"
+                android:textColorLink="#000000" />
+
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/descrip_header"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
