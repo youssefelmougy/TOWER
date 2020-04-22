@@ -73,7 +73,7 @@ public class Helper {
 
         for (int i = 0; i < size; i++) {
             String title = titles.get(i);
-            jsonParse("https://www.googleapis.com/books/v1/volumes?q="+title+"&maxResults=20");
+            jsonParse("https://www.googleapis.com/books/v1/volumes?q="+title+"&maxResults=40");
         }
        /* for (String title: titles) {
             jsonParse("https://www.googleapis.com/books/v1/volumes?q="+title+"&maxResults=1");
@@ -120,6 +120,7 @@ public class Helper {
                                     isbn13 = industryIdentifiers.getString("identifier");
                                 }
                             }
+                            if (isbn13.equals("")) continue;
                             if(!volumeInfo.has("imageLinks")) continue;
                             JSONObject linkObject = volumeInfo.getJSONObject("imageLinks");
                             String imageUrl = linkObject.getString("thumbnail");

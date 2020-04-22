@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ListView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DataSnapshot;
@@ -28,13 +29,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Set;
 
 import static java.lang.Math.abs;
 
 public class Search extends AppCompatActivity {
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    GridView gridView;
+    ListView gridView;
     EditText searchBox;
     String searchQuery = "";
     Context mContext;
@@ -45,7 +48,7 @@ public class Search extends AppCompatActivity {
         setContentView(R.layout.activity_search);
 
         mContext = this;
-        gridView = (GridView) findViewById(R.id.search_grid_view);
+        gridView = findViewById(R.id.search_grid_view);
         searchBox  = findViewById(R.id.search_box);
 
         if(getIntent().getStringExtra("SEARCH_QUERY") != null) {
@@ -80,6 +83,10 @@ public class Search extends AppCompatActivity {
                             overridePendingTransition(0, 0);
                         }
                         return true;
+                    case R.id.settings:
+                        startActivity(new Intent(getApplicationContext(), Settings.class));
+                        overridePendingTransition(0,0);
+                        return true;
                 }
 
                 return false;
@@ -98,7 +105,7 @@ public class Search extends AppCompatActivity {
 
     }
 
-    public void findTextbooks(final Context context, final GridView gridView, final String searchQuery) {
+    public void findTextbooks(final Context context, final ListView gridView, final String searchQuery) {
         DatabaseReference reference = database.getReference().child("textbooks");
         reference.addValueEventListener(new ValueEventListener() {
             @Override

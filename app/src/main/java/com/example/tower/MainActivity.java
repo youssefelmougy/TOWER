@@ -24,6 +24,7 @@ import org.w3c.dom.Text;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         Helper helper = new Helper(this);
         //helper.deleteAllBooks();
-        //helper.floodDatabase(20);
+        //helper.floodDatabase(5);
 
 
         DatabaseReference reference = database.getReference().child("textbooks");
@@ -121,6 +122,8 @@ public class MainActivity extends AppCompatActivity {
         };
 
     }
+
+    //TODO Fix Bug Where First Book Isn't Showing
     public void displayTextbooks(final Context context, final GridView gridView) {
         DatabaseReference reference = database.getReference().child("textbooks");
         reference.addValueEventListener(new ValueEventListener() {
@@ -132,12 +135,11 @@ public class MainActivity extends AppCompatActivity {
                     Textbook textbook = snapshot.getValue(Textbook.class);
                     textbookStack.push(textbook);
                 }
+                Log.d("StackSize", "" + textbookStack.size());
                 int max = 0;
-               for (int i = 0; i < textbookStack.size(); i++) {
-                   if (max == 20) break;
-                   textbooks.add(textbookStack.pop());
-                   max++;
-               }
+                while(!textbookStack.isEmpty()) {
+                    textbooks.add(textbookStack.pop());
+                }
 
                 gridView.setAdapter(new TextbookAdapter(context, textbooks, getLocalClassName()));
 

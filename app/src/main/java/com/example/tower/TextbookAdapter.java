@@ -62,8 +62,12 @@ public class TextbookAdapter extends BaseAdapter {
         if (convertView == null) {
             Log.d("Mike", "Hey I'm here!!!");
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
-            convertView = layoutInflater.inflate(R.layout.textbook, parent, false);
-
+            if (originalClass.equals("Search")) {
+                convertView=layoutInflater.inflate(R.layout.textbook_search, parent, false);
+            }
+            else {
+                convertView = layoutInflater.inflate(R.layout.textbook, parent, false);
+            }
 
         }
         else {
@@ -76,6 +80,15 @@ public class TextbookAdapter extends BaseAdapter {
         final TextView conditionTextView = (TextView)convertView.findViewById(R.id.textview_book_condition);
         final TextView priceTextView = (TextView)convertView.findViewById(R.id.textview_book_price);
         final LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.textbook_layout);
+        final TextView sellerTextView;
+        final TextView isbnTextView;
+
+        if (originalClass.equals("Search")) {
+            sellerTextView = (TextView)convertView.findViewById(R.id.textview_book_seller);
+            isbnTextView = (TextView)convertView.findViewById(R.id.textview_book_isbn);
+            isbnTextView.setText("ISBN-13: " + book.getIsbn13());
+            sellerTextView.setText("Seller: " + book.getSeller());
+        }
 
         // 4
         Picasso.get().load(book.getImageUrl()).placeholder(R.drawable.textbook).fit().into(imageView);

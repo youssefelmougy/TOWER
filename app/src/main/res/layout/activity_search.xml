@@ -32,13 +32,14 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <GridView
+    <ListView
         android:id="@+id/search_grid_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_centerInParent="true"
         android:layout_marginTop="24dp"
         android:columnWidth="100dp"
+        android:dividerHeight="10sp"
         android:gravity="center"
         android:numColumns="2"
         android:verticalSpacing="24dp"
@@ -47,7 +48,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/search_box">
 
-    </GridView>
+    </ListView>
 
     <Button
         android:id="@+id/submit_search"

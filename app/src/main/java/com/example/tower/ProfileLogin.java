@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,14 +31,15 @@ import java.util.ArrayList;
 
 
 public class ProfileLogin extends AppCompatActivity {
-
+    long studentID = 0;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     GridView gridView;
     TextbookAdapter adapter;
-    long studentID = 0;
     ConstraintLayout mainLayout;
     TextView firstBookAdd;
     ImageView firstArrow;
+    FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,24 +52,6 @@ public class ProfileLogin extends AppCompatActivity {
         Log.d("MikeX", "" + studentID);
 
         displayTextbooks(this, gridView);
-
-        DatabaseReference ref1 = database.getReference("/students/" + studentID);
-
-        ref1.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Student student = dataSnapshot.getValue(Student.class);
-                TextView tv = findViewById(R.id.suggestionsTitle);
-                String name = student.getName();
-                name = name.split(" ")[0];
-                tv.setText("Welcome Back, " + name);
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         Log.d("Mike", "" + studentID);
 
@@ -98,6 +82,55 @@ public class ProfileLogin extends AppCompatActivity {
                 }
 
                 return false;
+            }
+        });
+
+    }
+    //TODO Check if this is legit
+    @Override
+    protected void onStart() {
+        super.onStart();
+        FirebaseUser user = mAuth.getCurrentUser();
+        if (user != null) {
+            final String uID = user.getUid();
+            Log.d("MikeP", uID);
+            DatabaseReference reference1 = database.getReference().child("students");
+            reference1.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
+                        if (uID == null) break;
+                        if (snapshot.child("uID").getValue() == null) break;
+                        if (snapshot.child("uID").getValue().toString().equals(uID)) {
+                            String id = snapshot.child("id").getValue().toString();
+                            studentID = Long.parseLong(id);
+
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        };
+
+        DatabaseReference ref1 = database.getReference("/students/" + studentID);
+
+        ref1.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Student student = dataSnapshot.getValue(Student.class);
+                TextView tv = findViewById(R.id.suggestionsTitle);
+                String name = student.getName();
+                name = name.split(" ")[0];
+                tv.setText("Welcome Back, " + name);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
 
@@ -160,6 +193,7 @@ public class ProfileLogin extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
+
 
 }
 

@@ -101,6 +101,7 @@ public class Profile extends AppCompatActivity {
         super.onStart();
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
+
     }
 
     public void onClickLogin(View view) {
@@ -196,10 +197,12 @@ public class Profile extends AppCompatActivity {
                         MainActivity.loggedIn = true;
                         MainActivity.id = id;
                         login(id);
+
+
                     }
                     else {
                         Log.d("MikeX", "" + task.getException());
-                        Toast.makeText(Profile.this, "Invalid Email Address.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Profile.this, "Invalid Email Address or Password.", Toast.LENGTH_SHORT).show();
                     }
                 }
             });

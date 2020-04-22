@@ -126,6 +126,7 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
         Intent intent = new Intent(this, ProfileLogin.class);
         intent.putExtra("ADDED_BOOK_MESSAGE", "Added " + textbook.getTitle());
         startActivity(intent);
+        overridePendingTransition(0,0);
     }
 
     @Override
