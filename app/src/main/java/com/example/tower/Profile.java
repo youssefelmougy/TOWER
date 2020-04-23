@@ -194,9 +194,20 @@ public class Profile extends AppCompatActivity {
                         ref.child("" + id).child("email").setValue(email);
                         ref.child("" + id).child("password").setValue(password);
                         ref.child("" + id).child("uID").setValue(user.getUid());
-                        MainActivity.loggedIn = true;
-                        MainActivity.id = id;
-                        login(id);
+                        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(Profile.this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    MainActivity.loggedIn = true;
+                                    MainActivity.id = id;
+                                    login(id);
+                                }
+                                else {
+                                    startActivity(new Intent(Profile.this, Profile.class));
+                                }
+                            }
+                        });
+
 
 
                     }
