@@ -74,7 +74,6 @@ public class ConditionDescription extends AppCompatActivity {
     }
 
     public void goBack(View view) {
-        //TODO MAKE EVERY GO BACK X BUTTON USE THE METHOD HERE
         onBackPressed();
         overridePendingTransition(0,0);
     }

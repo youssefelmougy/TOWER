@@ -170,7 +170,10 @@ public class GoogleSuggestions extends AppCompatActivity {
         mQueue.add(request);
     }
 
-
+    public void goBack(View view) {
+        onBackPressed();
+        overridePendingTransition(0,0);
+    }
 
 
 }

@@ -161,65 +161,105 @@ public class Profile extends AppCompatActivity {
 
     }
 
-    public void onClickSignup(View view) {
-        final DatabaseReference ref = database.getReference().child("students");
+    public void onClickSignup(View view) throws Exception {
 
-        EditText idInput = findViewById(R.id.add_book_title);
-        EditText nameInput = findViewById(R.id.add_book_author);
-        EditText emailInput = findViewById(R.id.add_book_isbn);
-        EditText passInput = findViewById(R.id.add_book_description);
-        EditText passRepeat = findViewById(R.id.add_book_price);
+        try {
+            final DatabaseReference ref = database.getReference().child("students");
+            final EditText idInput = findViewById(R.id.add_book_title);
+            final EditText nameInput = findViewById(R.id.add_book_author);
+            final EditText emailInput = findViewById(R.id.add_book_isbn);
+            final EditText passInput = findViewById(R.id.add_book_description);
+            final EditText passRepeat = findViewById(R.id.add_book_price);
+            EditText[] etArr = {idInput, nameInput, emailInput, passInput, passRepeat};
 
-        final Long id = Long.parseLong(idInput.getText().toString());
-        final String fullName = nameInput.getText().toString();
-        final String email = emailInput.getText().toString();
-        final String password = passInput.getText().toString();
-        final String passwordRepeat = passRepeat.getText().toString();
+            for (EditText et: etArr) {
+                if (et.getText().toString().equals("")) {
+                    throw new Exception("Do Not Leave Any Information Blank");
+                }
+            }
 
-        if(!password.equals(passwordRepeat)) {
-            makeToast("Please enter the same password");
-        }
+            if(idInput.getText().toString().length() != 9) {
+                throw new Exception("Enter a valid Hofstra ID");
+            }
 
-        //TODO IMPLEMENT ACTUAL LOGIN
-        //TODO Use this https://firebase.googleblog.com/2017/02/email-verification-in-firebase-auth.html
-        else {
-            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+            Boolean userExits = false;
+            Query query = ref.orderByKey().equalTo(idInput.getText().toString());
+            query.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    Log.d("MikeX", "success?");
-                    if(task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        ref.child("" + id).child("id").setValue(id);
-                        ref.child("" + id).child("name").setValue(fullName);
-                        ref.child("" + id).child("email").setValue(email);
-                        ref.child("" + id).child("password").setValue(password);
-                        ref.child("" + id).child("uID").setValue(user.getUid());
-                        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(Profile.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    MainActivity.loggedIn = true;
-                                    MainActivity.id = id;
-                                    login(id);
-                                }
-                                else {
-                                    startActivity(new Intent(Profile.this, Profile.class));
-                                }
-                            }
-                        });
-
-
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Log.d("MikeQ", "A user with this ID exists");
+                        Toast.makeText(Profile.this, "A User With this ID Already Exists", Toast.LENGTH_LONG).show();
 
                     }
                     else {
-                        Log.d("MikeX", "" + task.getException());
-                        Toast.makeText(Profile.this, "Invalid Email Address or Password.", Toast.LENGTH_SHORT).show();
+                        final Long id = Long.parseLong(idInput.getText().toString());
+                        final String fullName = nameInput.getText().toString();
+                        final String email = emailInput.getText().toString();
+                        final String password = passInput.getText().toString();
+                        final String passwordRepeat = passRepeat.getText().toString();
+
+                        if(!password.equals(passwordRepeat)) {
+                            makeToast("Please enter the same password");
+                        }
+
+
+                        else {
+                            mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(Profile.this, new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    Log.d("MikeX", "success?");
+                                    if(task.isSuccessful()) {
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        user.sendEmailVerification();
+                                        ref.child("" + id).child("id").setValue(id);
+                                        ref.child("" + id).child("name").setValue(fullName);
+                                        ref.child("" + id).child("email").setValue(email);
+                                        ref.child("" + id).child("password").setValue(password);
+                                        ref.child("" + id).child("uID").setValue(user.getUid());
+                                        mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(Profile.this, new OnCompleteListener<AuthResult>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                                if (task.isSuccessful()) {
+                                                    MainActivity.loggedIn = true;
+                                                    MainActivity.id = id;
+                                                    login(id);
+                                                }
+                                                else {
+                                                    startActivity(new Intent(Profile.this, Profile.class));
+                                                }
+                                            }
+                                        });
+
+
+
+                                    }
+                                    else {
+                                        Log.d("MikeX", "" + task.getException());
+                                        if (password.length() < 6) {
+                                            Toast.makeText(Profile.this, "Enter a Password With At Least 6 Characters.", Toast.LENGTH_LONG).show();
+                                        }
+                                        else {
+                                            Toast.makeText(Profile.this, "A User With This Email Already Exists.", Toast.LENGTH_LONG).show();
+                                        }
+
+                                    }
+                                }
+                            });
+                        }
                     }
                 }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
             });
+
+        } catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
         }
-
-
     }
 
     public void login(long id) {
