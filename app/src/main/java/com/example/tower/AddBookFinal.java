@@ -146,4 +146,10 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
         startActivity(intent);
         overridePendingTransition(0,0);
     }
+
+    public void goBack(View view) {
+        onBackPressed();
+        overridePendingTransition(0,0);
+    }
+
 }

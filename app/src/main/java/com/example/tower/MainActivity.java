@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.GridView;
@@ -41,9 +42,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         Helper helper = new Helper(this);
         //helper.deleteAllBooks();
-        //helper.floodDatabase(5);
+        //helper.floodDatabase(20);
 
 
         DatabaseReference reference = database.getReference().child("textbooks");
@@ -90,6 +92,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -101,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
             reference1.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
                     for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                         if (uID == null) break;
                         if (snapshot.child("uID").getValue() == null) break;
@@ -123,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    //TODO Fix Bug Where First Book Isn't Showing
+
     public void displayTextbooks(final Context context, final GridView gridView) {
         DatabaseReference reference = database.getReference().child("textbooks");
         reference.addValueEventListener(new ValueEventListener() {
@@ -138,7 +143,9 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("StackSize", "" + textbookStack.size());
                 int max = 0;
                 while(!textbookStack.isEmpty()) {
+                    if(max == 20) break;
                     textbooks.add(textbookStack.pop());
+                    max++;
                 }
 
                 gridView.setAdapter(new TextbookAdapter(context, textbooks, getLocalClassName()));

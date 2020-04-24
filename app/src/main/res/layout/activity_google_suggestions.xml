@@ -19,6 +19,17 @@
         app:labelVisibilityMode="labeled"
         app:menu="@menu/menu_navigation" />
 
+    <ImageButton
+        android:id="@+id/canelButton"
+        android:layout_width="32dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="goBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/btn_dialog" />
+
     <TextView
         android:id="@+id/suggestionsTitle"
         android:layout_width="wrap_content"

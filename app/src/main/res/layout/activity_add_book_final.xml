@@ -6,20 +6,32 @@
     android:layout_height="match_parent"
     tools:context=".GoogleSuggestions">
 
+    <ImageButton
+        android:id="@+id/canelButton"
+        android:layout_width="32dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:onClick="goBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/btn_dialog" />
+
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:fillViewport="true"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-        android:fillViewport="true">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
+
 
             <TextView
                 android:id="@+id/add_book_final_header"
