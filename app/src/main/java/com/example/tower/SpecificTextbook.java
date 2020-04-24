@@ -192,7 +192,8 @@ public class SpecificTextbook extends AppCompatActivity {
             DatabaseReference newRef = database.getReference().child("students/" + seller);
             newRef.addValueEventListener(new ValueEventListener() {
                 @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot)
+                {
                     String email = dataSnapshot.child("email").getValue().toString();
                     Intent intent = new Intent(Intent.ACTION_SEND);
                     intent.setType("plain/text");

@@ -147,7 +147,7 @@ public class Profile extends AppCompatActivity {
 
                 } else {
                     result.setTextColor(Color.BLACK);
-                    result.setText("The username " + user + " does not exist.");
+                    result.setText("Invalid User ID or Password");
                 }
 
 

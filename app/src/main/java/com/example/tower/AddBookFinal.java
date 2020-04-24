@@ -5,11 +5,14 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -31,6 +34,7 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
     String imageUrl;
     Spinner spinner;
     String condition;
+    Button addBook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,12 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
         isbnET = findViewById(R.id.add_book_isbn);
         priceET = findViewById(R.id.add_book_price);
         spinner = (Spinner) findViewById(R.id.spinner);
+
+        addBook = findViewById(R.id.add_book_button);
+        titleET.addTextChangedListener(addBookTextWatcher);
+        authorET.addTextChangedListener(addBookTextWatcher);
+        isbnET.addTextChangedListener(addBookTextWatcher);
+        priceET.addTextChangedListener(addBookTextWatcher);
 
         titleET.setText(title);
         authorET.setText(author);
@@ -103,30 +113,55 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
         });
     }
 
-    public void onClickSubmit(View view) {
-        DatabaseReference reference = database.getReference().child("textbooks");
-        String key = reference.push().getKey();
-        String title = titleET.getText().toString();
-        String author = authorET.getText().toString();
-        String description = descriptionET.getText().toString();
-        String isbn = isbnET.getText().toString();
-        Double price = Double.parseDouble(priceET.getText().toString());
-        Textbook textbook = new Textbook(title, author, MainActivity.id, price, key, imageUrl, isbn, description, condition);
+    private TextWatcher addBookTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-        reference.child(key).child("title").setValue(textbook.getTitle());
-        reference.child(key).child("author").setValue(textbook.getAuthor());
-        reference.child(key).child("price").setValue(textbook.getPrice());
-        reference.child(key).child("seller").setValue(MainActivity.id);
-        reference.child(key).child("description").setValue(textbook.getDescription());
-        reference.child(key).child("imageUrl").setValue(textbook.getImageUrl());
-        reference.child(key).child("isbn13").setValue(textbook.getIsbn13());
-        reference.child(key).child("uniqueID").setValue(key);
-        reference.child(key).child("condition").setValue(textbook.getCondition());
+        }
 
-        Intent intent = new Intent(this, ProfileLogin.class);
-        intent.putExtra("ADDED_BOOK_MESSAGE", "Added " + textbook.getTitle());
-        startActivity(intent);
-        overridePendingTransition(0,0);
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count)
+        {
+            String title = titleET.getText().toString();
+            String author = authorET.getText().toString();
+            String isbn = isbnET.getText().toString();
+            String price = priceET.getText().toString();
+            addBook.setEnabled(!title.isEmpty() && !author.isEmpty() && isbn.length() == 13 && !price.isEmpty());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
+    public void onClickSubmit(View view)
+    {
+
+            DatabaseReference reference = database.getReference().child("textbooks");
+            String key = reference.push().getKey();
+            String title = titleET.getText().toString();
+            String author = authorET.getText().toString();
+            String description = descriptionET.getText().toString();
+            String isbn = isbnET.getText().toString();
+            Double price = Double.parseDouble(priceET.getText().toString());
+            Textbook textbook = new Textbook(title, author, MainActivity.id, price, key, imageUrl, isbn, description, condition);
+
+            reference.child(key).child("title").setValue(textbook.getTitle());
+            reference.child(key).child("author").setValue(textbook.getAuthor());
+            reference.child(key).child("price").setValue(textbook.getPrice());
+            reference.child(key).child("seller").setValue(MainActivity.id);
+            reference.child(key).child("description").setValue(textbook.getDescription());
+            reference.child(key).child("imageUrl").setValue(textbook.getImageUrl());
+            reference.child(key).child("isbn13").setValue(textbook.getIsbn13());
+            reference.child(key).child("uniqueID").setValue(key);
+            reference.child(key).child("condition").setValue(textbook.getCondition());
+
+            Intent intent = new Intent(this, ProfileLogin.class);
+            intent.putExtra("ADDED_BOOK_MESSAGE", "Added " + textbook.getTitle());
+            startActivity(intent);
+            overridePendingTransition(0,0);
+
     }
 
     @Override
