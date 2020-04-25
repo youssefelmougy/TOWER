@@ -7,6 +7,8 @@ import androidx.viewpager.widget.ViewPager;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -34,6 +36,7 @@ public class Profile extends AppCompatActivity {
     FirebaseAuth mAuth;
     TabLayout tabLayout;
     ViewPager viewPager;
+    TextView strength;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,7 +45,7 @@ public class Profile extends AppCompatActivity {
 
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.viewPager);
-
+        strength = findViewById(R.id.strength);
         mAuth = FirebaseAuth.getInstance();
         final TabAdapter tabAdapter = new TabAdapter(this, getSupportFragmentManager(), tabLayout.getTabCount());
         viewPager.setAdapter(tabAdapter);
@@ -63,6 +66,7 @@ public class Profile extends AppCompatActivity {
 
             }
         });
+
 
         //Initialize and Assign Variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -94,15 +98,15 @@ public class Profile extends AppCompatActivity {
                 return false;
             }
         });
-    }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
 
+        EditText passField = findViewById(R.id.pass_input);
+
+       /* */
 
     }
+
+
 
     public void onClickLogin(View view) {
         final TextView result = findViewById(R.id.login_result);
@@ -165,22 +169,30 @@ public class Profile extends AppCompatActivity {
 
         try {
             final DatabaseReference ref = database.getReference().child("students");
-            final EditText idInput = findViewById(R.id.add_book_title);
-            final EditText nameInput = findViewById(R.id.add_book_author);
-            final EditText emailInput = findViewById(R.id.add_book_isbn);
-            final EditText passInput = findViewById(R.id.add_book_description);
-            final EditText passRepeat = findViewById(R.id.add_book_price);
+            final EditText idInput = findViewById(R.id.id_input);
+            final EditText nameInput = findViewById(R.id.name_input);
+            final EditText emailInput = findViewById(R.id.email_input);
+            final EditText passInput = findViewById(R.id.pass_input);
+            final EditText passRepeat = findViewById(R.id.repeat_pass_input);
             EditText[] etArr = {idInput, nameInput, emailInput, passInput, passRepeat};
 
             for (EditText et: etArr) {
                 if (et.getText().toString().equals("")) {
                     throw new Exception("Do Not Leave Any Information Blank");
                 }
+                if (et.getText().toString().length() > 25) {
+                    throw new Exception("Inputs Must be 25 Characters or Less");
+                }
             }
 
             if(idInput.getText().toString().length() != 9) {
                 throw new Exception("Enter a valid Hofstra ID");
             }
+
+            if(idInput.getText().toString().charAt(0) != '7') {
+                throw new Exception("Enter a valid Hofstra ID");
+            }
+
 
             Boolean userExits = false;
             Query query = ref.orderByKey().equalTo(idInput.getText().toString());

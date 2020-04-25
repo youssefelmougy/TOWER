@@ -4,9 +4,13 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
 
 
 /**
@@ -15,6 +19,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class SignUpFragment extends Fragment {
+    TextView strength;
+    EditText passField;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -61,4 +67,37 @@ public class SignUpFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_sign_up, container, false);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        strength = getView().findViewById(R.id.strength);
+        passField = getView().findViewById(R.id.pass_input);
+
+        passField.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                calculatePasswordStrength(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+    }
+
+    private void calculatePasswordStrength(String password) {
+        PasswordStrength passwordStrength = PasswordStrength.calculate(password);
+        strength.setText(passwordStrength.msg);
+        strength.setTextColor(passwordStrength.color);
+
+    }
+
+
 }

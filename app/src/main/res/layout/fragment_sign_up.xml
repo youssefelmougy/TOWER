@@ -36,8 +36,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/signup_header" />
 
+    <TextView
+        android:id="@+id/textView2_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="(without the 'h')"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
     <EditText
-        android:id="@+id/add_book_title"
+        android:id="@+id/id_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -46,7 +56,7 @@
         android:inputType="none|number"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+        app:layout_constraintTop_toBottomOf="@+id/textView2_1" />
 
     <TextView
         android:id="@+id/textView3"
@@ -57,10 +67,10 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_book_title" />
+        app:layout_constraintTop_toBottomOf="@+id/id_input" />
 
     <EditText
-        android:id="@+id/add_book_author"
+        android:id="@+id/name_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -80,10 +90,10 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_book_author" />
+        app:layout_constraintTop_toBottomOf="@+id/name_input" />
 
     <EditText
-        android:id="@+id/add_book_isbn"
+        android:id="@+id/email_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -102,18 +112,30 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_book_isbn" />
+        app:layout_constraintTop_toBottomOf="@+id/email_input" />
 
-    <EditText
-        android:id="@+id/add_book_description"
+    <TextView
+        android:id="@+id/strength"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView5"
+        tools:text="Strength: " />
+
+    <EditText
+        android:id="@+id/pass_input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:inputType="none|textPassword"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/strength" />
 
     <TextView
         android:id="@+id/textView6"
@@ -124,10 +146,10 @@
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_book_description" />
+        app:layout_constraintTop_toBottomOf="@+id/pass_input" />
 
     <EditText
-        android:id="@+id/add_book_price"
+        android:id="@+id/repeat_pass_input"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -148,6 +170,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_book_price" />
+        app:layout_constraintTop_toBottomOf="@+id/repeat_pass_input" />
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

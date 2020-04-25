@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,13 +14,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.text.NumberFormat;
 
 public class AddBookFinal extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -56,12 +52,12 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
             imageUrl = bundle.getString("IMAGE_URL");
         }
 
-        titleET = findViewById(R.id.add_book_title);
-        authorET = findViewById(R.id.add_book_author);
-        descriptionET = findViewById(R.id.add_book_description);
-        isbnET = findViewById(R.id.add_book_isbn);
-        priceET = findViewById(R.id.add_book_price);
-        spinner = (Spinner) findViewById(R.id.spinner);
+        titleET = findViewById(R.id.title_input);
+        authorET = findViewById(R.id.author_input);
+        descriptionET = findViewById(R.id.description_input);
+        isbnET = findViewById(R.id.isbn_input);
+        priceET = findViewById(R.id.price_input);
+        spinner = findViewById(R.id.spinner);
 
         addBook = findViewById(R.id.add_book_button);
         titleET.addTextChangedListener(addBookTextWatcher);

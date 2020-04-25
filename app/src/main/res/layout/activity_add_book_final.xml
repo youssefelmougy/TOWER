@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".GoogleSuggestions">
+    tools:context=".AddBookFinal">
 
     <ImageButton
         android:id="@+id/canelButton"
@@ -51,7 +51,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/add_book_title"
+                android:id="@+id/title_input"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -68,7 +68,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/add_book_author"
+                android:id="@+id/author_input"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -85,7 +85,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/add_book_isbn"
+                android:id="@+id/isbn_input"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -102,7 +102,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/add_book_description"
+                android:id="@+id/description_input"
                 android:layout_width="308dp"
                 android:layout_height="284dp"
                 android:layout_marginTop="8dp"
@@ -120,7 +120,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/add_book_price"
+                android:id="@+id/price_input"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"

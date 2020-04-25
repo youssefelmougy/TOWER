@@ -3,7 +3,10 @@
 
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
+    <string name="weak">Weak</string>
+    <string name="medium">Medium</string>
+    <string name="strong">Strong</string>
+    <string name="very_strong">Very Strong</string>
     <string-array name="condition_options">
         <item>Like New</item>
         <item>Good</item>
