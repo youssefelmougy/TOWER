@@ -6,17 +6,6 @@
     android:layout_height="match_parent"
     tools:context=".AddBookFinal">
 
-    <ImageButton
-        android:id="@+id/canelButton"
-        android:layout_width="32dp"
-        android:layout_height="31dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:onClick="goBack"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@android:drawable/btn_dialog" />
-
     <androidx.core.widget.NestedScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -57,7 +46,8 @@
                 android:layout_marginTop="8dp"
                 android:ems="10"
                 android:hint="Software Engineering 10th Edition"
-                android:inputType="none|text" />
+                android:inputType="none|text"
+                android:maxLength="100" />
 
             <TextView
                 android:id="@+id/textView3"
@@ -74,7 +64,8 @@
                 android:layout_marginTop="8dp"
                 android:ems="10"
                 android:hint="Ian Sommerville"
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                android:maxLength="100" />
 
             <TextView
                 android:id="@+id/textView4"
@@ -91,7 +82,8 @@
                 android:layout_marginTop="8dp"
                 android:ems="10"
                 android:hint="9781292096148"
-                android:inputType="numberSigned" />
+                android:inputType="numberSigned"
+                android:maxLength="13" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -109,7 +101,8 @@
                 android:background="@android:color/transparent"
                 android:ems="10"
                 android:gravity="clip_horizontal"
-                android:inputType="textLongMessage|textMultiLine" />
+                android:inputType="textLongMessage|textMultiLine"
+                android:maxLength="10000" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -119,13 +112,28 @@
                 android:text="Price"
                 android:textSize="18sp" />
 
-            <EditText
-                android:id="@+id/price_input"
+            <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:ems="10"
-                android:inputType="none|number|numberDecimal" />
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:text="$"
+                    android:textSize="24sp" />
+
+                <EditText
+                    android:id="@+id/price_input"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:ems="10"
+                    android:inputType="none|number|numberDecimal" />
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -170,6 +178,17 @@
                 android:text="Add Book" />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <ImageButton
+        android:id="@+id/cancelButton"
+        android:layout_width="32dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:onClick="goBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/btn_dialog" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"

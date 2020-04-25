@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
@@ -131,8 +132,15 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
         }
     };
 
-    public void onClickSubmit(View view)
+    public void onClickSubmit(View view) throws Exception
     {
+        try {
+            EditText[] etArr = {titleET, authorET, isbnET, priceET, descriptionET};
+            for (EditText et: etArr) {
+                if (et.getText().toString().equals("")) {
+                    throw new Exception("Don't leave any information blank");
+                }
+            }
 
             DatabaseReference reference = database.getReference().child("textbooks");
             String key = reference.push().getKey();
@@ -143,6 +151,17 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
             Double price = Double.parseDouble(priceET.getText().toString());
             Textbook textbook = new Textbook(title, author, MainActivity.id, price, key, imageUrl, isbn, description, condition);
 
+            if (title.length() > 100) {
+                throw new Exception("Enter a shorter title");
+            }
+
+            if (description.split(" ").length > 750) {
+                throw new Exception("Enter a description with less than 750 words");
+            }
+
+            if (price > 1000) {
+                throw new Exception("Maximum book price is $1000");
+            }
             reference.child(key).child("title").setValue(textbook.getTitle());
             reference.child(key).child("author").setValue(textbook.getAuthor());
             reference.child(key).child("price").setValue(textbook.getPrice());
@@ -157,6 +176,10 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
             intent.putExtra("ADDED_BOOK_MESSAGE", "Added " + textbook.getTitle());
             startActivity(intent);
             overridePendingTransition(0,0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
+        }
 
     }
 
@@ -182,5 +205,6 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
         onBackPressed();
         overridePendingTransition(0,0);
     }
+
 
 }
