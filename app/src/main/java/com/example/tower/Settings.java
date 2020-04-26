@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -24,12 +25,17 @@ public class Settings extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
+        if (loggedIn) {
+            ImageButton signOutButton = findViewById(R.id.imageButton);
+            ImageButton accountSettingsButton = findViewById(R.id.imageButton4);
+            signOutButton.setVisibility(View.VISIBLE);
+            accountSettingsButton.setVisibility(View.VISIBLE);
+        }
+
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        //Set Home Selected
         bottomNavigationView.setSelectedItemId(R.id.settings);
 
-        //Perform ItemSelectedListener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -78,11 +84,15 @@ public class Settings extends AppCompatActivity {
             MainActivity.id = 0;
             Intent intent = new Intent(this, Profile.class);
             startActivity(intent);
-            fa.finish();
             finish();
             Toast.makeText(this, "Signed Out Successfully", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public void accountSettings(View view) {
+        startActivity(new Intent(this, AccountSettings.class));
+        overridePendingTransition(0,0);
     }
 
 }

@@ -23,12 +23,13 @@
         android:id="@+id/imageButton"
         android:layout_width="135dp"
         android:layout_height="180dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginBottom="60dp"
         android:onClick="signOutButton"
         android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:srcCompat="@drawable/dooredit" />
 
     <ImageButton
@@ -59,11 +60,11 @@
         android:id="@+id/imageButton3"
         android:layout_width="135dp"
         android:layout_height="180dp"
-        android:layout_marginStart="48dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginTop="32dp"
         android:scaleType="centerCrop"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:srcCompat="@drawable/favoriteedit" />
 
     <ImageButton
@@ -72,10 +73,12 @@
         android:layout_height="180dp"
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="60dp"
+        android:onClick="accountSettings"
         android:scaleType="centerCrop"
+        android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/deleteedit" />
+        app:srcCompat="@drawable/settingsedit" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
