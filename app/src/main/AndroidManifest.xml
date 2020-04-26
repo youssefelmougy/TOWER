@@ -39,7 +39,8 @@
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/noAnimTheme">
+            android:theme="@style/noAnimTheme"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -46,8 +46,9 @@ public class ProfileLogin extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile_login);
+        MainActivity.count = 1;
         fa = this;
-        gridView = (GridView)findViewById(R.id.main_grid_view);
+        gridView = findViewById(R.id.main_grid_view);
         studentID = MainActivity.id;
         mainLayout = findViewById(R.id.profile_login_layout);
         firstBookAdd = findViewById(R.id.add_first_book_text);
@@ -117,7 +118,7 @@ public class ProfileLogin extends AppCompatActivity {
 
                 }
             });
-        };
+        }
 
         DatabaseReference ref1 = database.getReference("/students/" + studentID);
 
@@ -188,14 +189,6 @@ public class ProfileLogin extends AppCompatActivity {
 
     }
 
-    public void signOutButton(View view) {
-        FirebaseAuth.getInstance().signOut();
-        MainActivity.loggedIn = false;
-        MainActivity.id = 0;
-        Intent intent = new Intent(this, Profile.class);
-        startActivity(intent);
-        finish();
-    }
 
 
 }

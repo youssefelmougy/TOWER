@@ -2,6 +2,7 @@ package com.example.tower;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import android.os.Handler;
 
 public class Helper {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -93,6 +95,7 @@ public class Helper {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         try {
                             if(success == 1) {
+                                Log.d("mikew", "it ran");
                                 addBook(textbook);
                                 break;
                             }
@@ -124,7 +127,7 @@ public class Helper {
                             if(!volumeInfo.has("imageLinks")) continue;
                             JSONObject linkObject = volumeInfo.getJSONObject("imageLinks");
                             String imageUrl = linkObject.getString("thumbnail");
-                            imageUrl = imageUrl.substring(0,4)+"s" + imageUrl.substring(4,imageUrl.length())+".jpg";
+                            imageUrl = imageUrl.substring(0,4)+"s" + imageUrl.substring(4)+".jpg";
                             textbook = new Textbook(title, authors, isbn13, imageUrl, description);
                             Log.d("MikeX", textbook.getAuthor());
                             success++;
@@ -147,23 +150,31 @@ public class Helper {
         mQueue.add(request);
     }
 
-    public void addBook(Textbook textbook) {
-        DatabaseReference reference = database.getReference().child("textbooks");
-        String key = reference.push().getKey();
+    public void addBook(final Textbook textbook) {
+        final Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                DatabaseReference reference = database.getReference().child("textbooks");
+                String key = reference.push().getKey();
 
-        textbook.setSeller(702580834);
-        textbook.setCondition("Good");
-        textbook.setPrice(6.99);
+                textbook.setSeller(702580834);
+                textbook.setCondition("Good");
+                textbook.setPrice(6.99);
 
-        reference.child(key).child("title").setValue(textbook.getTitle());
-        reference.child(key).child("author").setValue(textbook.getAuthor());
-        reference.child(key).child("price").setValue(textbook.getPrice());
-        reference.child(key).child("seller").setValue(textbook.getSeller());
-        reference.child(key).child("description").setValue(textbook.getDescription());
-        reference.child(key).child("imageUrl").setValue(textbook.getImageUrl());
-        reference.child(key).child("isbn13").setValue(textbook.getIsbn13());
-        reference.child(key).child("uniqueID").setValue(key);
-        reference.child(key).child("condition").setValue(textbook.getCondition());
+                reference.child(key).child("title").setValue(textbook.getTitle());
+                reference.child(key).child("author").setValue(textbook.getAuthor());
+                reference.child(key).child("price").setValue(textbook.getPrice());
+                reference.child(key).child("seller").setValue(textbook.getSeller());
+                reference.child(key).child("description").setValue(textbook.getDescription());
+                reference.child(key).child("imageUrl").setValue(textbook.getImageUrl());
+                reference.child(key).child("isbn13").setValue(textbook.getIsbn13());
+                reference.child(key).child("uniqueID").setValue(key);
+                reference.child(key).child("condition").setValue(textbook.getCondition());
+                //handler.postDelayed(this, 10000);
+
+            }
+        }, 10000);
 
     }
 }

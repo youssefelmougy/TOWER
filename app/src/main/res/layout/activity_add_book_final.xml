@@ -122,9 +122,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginTop="4dp"
                     android:layout_weight="1"
                     android:text="$"
-                    android:textSize="24sp" />
+                    android:textSize="18sp" />
 
                 <EditText
                     android:id="@+id/price_input"

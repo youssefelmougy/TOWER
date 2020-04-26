@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.GridView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     public static Boolean loggedIn = false;
     public static long id = 0;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    static ArrayList<Textbook> textbooks = new ArrayList<>();
+    static int count = 0;
+    GridView gridView;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     @Override
@@ -42,16 +46,20 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         Helper helper = new Helper(this);
         //helper.deleteAllBooks();
-        //helper.floodDatabase(20);
+        //if (count == 0) helper.floodDatabase(100);
 
 
         DatabaseReference reference = database.getReference().child("textbooks");
-        GridView gridView = findViewById(R.id.main_grid_view);
-        displayTextbooks(this, gridView);
+        gridView = findViewById(R.id.main_grid_view);
+        if (count == 0) {
+            displayTextbooks(this, gridView);
+        }
 
+        else {
+            gridView.setAdapter(new TextbookAdapter(this,textbooks, getLocalClassName()));
+        }
 
         //Initialize and Assign Variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -92,8 +100,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     @Override
     protected void onStart() {
         super.onStart();
@@ -105,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
             reference1.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
                     for (DataSnapshot snapshot: dataSnapshot.getChildren()) {
                         if (uID == null) break;
                         if (snapshot.child("uID").getValue() == null) break;
@@ -124,17 +129,17 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             });
-        };
+        }
 
     }
 
 
     public void displayTextbooks(final Context context, final GridView gridView) {
         DatabaseReference reference = database.getReference().child("textbooks");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                ArrayList<Textbook> textbooks = new ArrayList<>();
+                //ArrayList<Textbook> textbooks = new ArrayList<>();
                 Stack<Textbook> textbookStack = new Stack<>();
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     Textbook textbook = snapshot.getValue(Textbook.class);
@@ -157,6 +162,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        count++;
     }
 
     public void getHID(final String uID) {
@@ -177,6 +183,11 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    public void refreshBooks(View view) {
+        textbooks.clear();
+        displayTextbooks(this, gridView);
     }
 
 }

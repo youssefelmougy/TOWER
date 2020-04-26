@@ -162,6 +162,8 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
             if (price > 1000) {
                 throw new Exception("Maximum book price is $1000");
             }
+
+
             reference.child(key).child("title").setValue(textbook.getTitle());
             reference.child(key).child("author").setValue(textbook.getAuthor());
             reference.child(key).child("price").setValue(textbook.getPrice());
