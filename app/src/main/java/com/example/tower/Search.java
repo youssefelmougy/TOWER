@@ -107,7 +107,7 @@ public class Search extends AppCompatActivity {
 
     public void findTextbooks(final Context context, final ListView gridView, final String searchQuery) {
         DatabaseReference reference = database.getReference().child("textbooks");
-        reference.addValueEventListener(new ValueEventListener() {
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 ArrayList<Textbook> textbooks = new ArrayList<>();
@@ -118,7 +118,15 @@ public class Search extends AppCompatActivity {
                 }
 
                 ArrayList<Textbook> orderedList = orderBySimilarityMK2(textbooks, searchQuery);
-                TextbookAdapter adapter = new TextbookAdapter(context, orderedList, getLocalClassName(), searchQuery);
+                ArrayList<Textbook> newList = new ArrayList<>();
+                int max = 0;
+                for (Textbook book: orderedList) {
+                    if (max > 40) break;
+                    newList.add(book);
+                    max++;
+                }
+                orderedList.clear();
+                TextbookAdapter adapter = new TextbookAdapter(context, newList, getLocalClassName(), searchQuery);
                 gridView.setAdapter(adapter);
 
             }
