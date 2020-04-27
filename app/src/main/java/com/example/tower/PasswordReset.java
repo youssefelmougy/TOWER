@@ -55,6 +55,7 @@ public class PasswordReset extends AppCompatActivity {
 
     public void goBack(View view) {
         onBackPressed();
+        overridePendingTransition(0,0);
     }
 
     public void sendResetEmail(View view) {
