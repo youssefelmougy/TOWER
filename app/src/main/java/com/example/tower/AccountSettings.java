@@ -140,6 +140,9 @@ public class AccountSettings extends AppCompatActivity {
                 submit.setVisibility(View.GONE);
                 currentPass.setVisibility(View.GONE);
                 currentPassTitle.setVisibility(View.GONE);
+                currentPass.setText("");
+
+
             }
             emailChanged = false;
             email.setFocusable(false);

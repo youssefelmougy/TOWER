@@ -1,11 +1,19 @@
 package com.example.tower;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.TextPaint;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,6 +29,7 @@ import android.widget.TextView;
 public class SignUpFragment extends Fragment {
     TextView strength;
     EditText passField;
+    TextView conditions;
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -73,7 +82,7 @@ public class SignUpFragment extends Fragment {
         super.onResume();
         strength = getView().findViewById(R.id.strength);
         passField = getView().findViewById(R.id.pass_input);
-
+        conditions = getView().findViewById(R.id.conditions);
         passField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -90,6 +99,37 @@ public class SignUpFragment extends Fragment {
 
             }
         });
+
+        SpannableString ss = new SpannableString(conditions.getText().toString());
+        ClickableSpan clickableSpan = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                startActivity(new Intent(getContext(), PrivacyPolicy.class));
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+        ss.setSpan(clickableSpan, 49,63, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        ClickableSpan clickableSpan1 = new ClickableSpan() {
+            @Override
+            public void onClick(@NonNull View widget) {
+                startActivity(new Intent(getContext(), EULA.class));
+            }
+
+            @Override
+            public void updateDrawState(@NonNull TextPaint ds) {
+                super.updateDrawState(ds);
+                ds.setUnderlineText(false);
+            }
+        };
+        ss.setSpan(clickableSpan1, 68,72, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        conditions.setText(ss);
+        conditions.setMovementMethod(LinkMovementMethod.getInstance());
+        conditions.setHighlightColor(Color.TRANSPARENT);
     }
 
     private void calculatePasswordStrength(String password) {

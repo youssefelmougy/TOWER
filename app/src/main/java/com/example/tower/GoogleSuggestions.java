@@ -141,10 +141,11 @@ public class GoogleSuggestions extends AppCompatActivity {
                                     isbn13 = industryIdentifiers.getString("identifier");
                                 }
                             }
+                            if (isbn13.equals("")) continue;
                             if(!volumeInfo.has("imageLinks")) continue;
                             JSONObject linkObject = volumeInfo.getJSONObject("imageLinks");
                             String imageUrl = linkObject.getString("thumbnail");
-                            imageUrl = imageUrl.substring(0,4)+"s" + imageUrl.substring(4,imageUrl.length())+".jpg";
+                            imageUrl = imageUrl.substring(0,4)+"s" + imageUrl.substring(4)+".jpg";
                             Textbook textbook = new Textbook(title, authors, isbn13, imageUrl, description);
                             textbooks.add(textbook);
                             success++;

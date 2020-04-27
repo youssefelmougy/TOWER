@@ -1,9 +1,11 @@
 package com.example.tower;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -72,19 +74,19 @@ public class SpecificTextbook extends AppCompatActivity {
             searchQuery = extras.getString("SEARCH_QUERY");
         }
 
-        TextView specificTitle = (TextView)findViewById(R.id.specific_title);
-        TextView specificAuthor = (TextView)findViewById(R.id.specific_author);
-        TextView specificSeller = (TextView)findViewById(R.id.specific_seller);
-        TextView specificPrice = (TextView)findViewById(R.id.specific_price);
-        TextView specificDescription = (TextView)findViewById(R.id.specific_description);
-        TextView descripHeader = (TextView) findViewById(R.id.descrip_header);
-        TextView specificCondition = (TextView) findViewById(R.id.condition_textview);
+        TextView specificTitle = findViewById(R.id.specific_title);
+        TextView specificAuthor = findViewById(R.id.specific_author);
+        TextView specificSeller = findViewById(R.id.specific_seller);
+        TextView specificPrice = findViewById(R.id.specific_price);
+        TextView specificDescription = findViewById(R.id.specific_description);
+        TextView descripHeader = findViewById(R.id.descrip_header);
+        TextView specificCondition = findViewById(R.id.condition_textview);
         TextView isbnText = findViewById(R.id.isbn_textview);
         ImageButton conditionButton = findViewById(R.id.conditionButton);
 
-        Button removeOrContact = (Button) findViewById(R.id.removeOrContact);
-        Button correctBook = (Button) findViewById(R.id.correctBook);
-        ImageView bookCover = (ImageView) findViewById(R.id.book_cover);
+        Button removeOrContact = findViewById(R.id.removeOrContact);
+        Button correctBook = findViewById(R.id.correctBook);
+        ImageView bookCover = findViewById(R.id.book_cover);
 
         if(seller == MainActivity.id) {
             isSeller = true;
@@ -177,11 +179,7 @@ public class SpecificTextbook extends AppCompatActivity {
     public void onClickContactDelete(View view) {
         DatabaseReference ref = database.getReference().child("textbooks/" + uniqueID);
         if(isSeller) {
-            ref.removeValue();
-            Intent intent = goBack();
-            startActivity(intent);
-            overridePendingTransition(0,0);
-            Toast.makeText(this, "Deleted " + title, Toast.LENGTH_SHORT).show();
+            dialogBox(ref);
         }
         else if(!MainActivity.loggedIn) {
             Intent intent = new Intent(this, Profile.class);
@@ -209,7 +207,7 @@ public class SpecificTextbook extends AppCompatActivity {
                 }
             });
         }
-        finish();
+        //finish();
     }
 
     public Intent goBack() {
@@ -250,4 +248,37 @@ public class SpecificTextbook extends AppCompatActivity {
         intent.putExtras(bundle);
         startActivity(intent);
     }
+
+    public void dialogBox(final DatabaseReference ref) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Are you sure?");
+        alertDialogBuilder.setMessage("By clicking YES you agree to remove your textbook from TOWER");
+        alertDialogBuilder.setPositiveButton("YES",
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Log.d("ekim", "positive is called");
+                        ref.removeValue();
+                        Intent intent = goBack();
+                        startActivity(intent);
+                        overridePendingTransition(0,0);
+                        Toast.makeText(SpecificTextbook.this, "Deleted " + title, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        alertDialogBuilder.setNegativeButton("NO",
+                new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface arg0, int arg1) {
+                        Log.d("ekim", "negative is called");
+
+                    }
+                });
+
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+    }
+
 }

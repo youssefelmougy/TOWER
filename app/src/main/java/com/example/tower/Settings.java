@@ -71,7 +71,7 @@ public class Settings extends AppCompatActivity {
     public void reportBug(View view) {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.setType("plain/text");
-        intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"TowerSupportTeam@gmail.com"});
+        intent.putExtra(Intent.EXTRA_EMAIL, new String[] {"towerapplicationteam@gmail.com"});
         intent.putExtra(Intent.EXTRA_SUBJECT, "TOWER Bug Report");
         intent.putExtra(Intent.EXTRA_TEXT, "Change this text with the bug you would like to report.");
         startActivity(Intent.createChooser(intent, ""));
@@ -92,6 +92,16 @@ public class Settings extends AppCompatActivity {
 
     public void accountSettings(View view) {
         startActivity(new Intent(this, AccountSettings.class));
+        overridePendingTransition(0,0);
+    }
+
+    public void openPolicy(View view) {
+        startActivity(new Intent(this, PrivacyPolicy.class));
+        overridePendingTransition(0,0);
+    }
+
+    public void openEULA(View view) {
+        startActivity(new Intent(this, EULA.class));
         overridePendingTransition(0,0);
     }
 

@@ -12,4 +12,5 @@
         <item>Good</item>
         <item>Poor</item>
     </string-array>
+    <string name ="conditions">By tapping Sign Up you agree to the applications Privacy Policy and EULA.</string>
 </resources>
