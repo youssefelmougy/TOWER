@@ -226,6 +226,17 @@ public class AccountSettings extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
                                         Toast.makeText(AccountSettings.this, "Email Has Been Changed", Toast.LENGTH_LONG).show();
+                                        emailChanged = false;
+                                        email.setFocusable(false);
+                                        email.setFocusableInTouchMode(false);
+                                        email.setClickable(false);
+                                        userEmail = email.getText().toString();
+                                        email.setText(userEmail);
+                                        if (!passChanged) {
+                                            submit.setVisibility(View.GONE);
+                                            currentPass.setVisibility(View.GONE);
+                                            currentPassTitle.setVisibility(View.GONE);
+                                        }
                                     }
                                     else {
                                         Toast.makeText(AccountSettings.this, "User with this Email Already Exists", Toast.LENGTH_LONG).show();
@@ -236,7 +247,19 @@ public class AccountSettings extends AppCompatActivity {
 
                         }
                         if (passChanged) {
+                            passChanged = false;
                             user.updatePassword(newPass.getText().toString());
+                            if (!emailChanged) {
+                                submit.setVisibility(View.GONE);
+                                currentPass.setVisibility(View.GONE);
+                                currentPassTitle.setVisibility(View.GONE);
+                            }
+                            strength.setVisibility(View.GONE);
+                            newPass.setFocusable(false);
+                            newPass.setFocusableInTouchMode(false);
+                            newPass.setClickable(false);
+                            newPass.setText("password");
+
                             Toast.makeText(AccountSettings.this, "Password Has Been Changed", Toast.LENGTH_LONG).show();
                         }
                     }
@@ -249,6 +272,7 @@ public class AccountSettings extends AppCompatActivity {
             e.printStackTrace();
             Toast.makeText(AccountSettings.this, e.getMessage(), Toast.LENGTH_LONG).show();
         }
+        currentPass.setText("");
     }
 
     private void calculatePasswordStrength(String password) {

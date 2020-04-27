@@ -13,9 +13,12 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,13 +35,14 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
     Spinner spinner;
     String condition;
     Button addBook;
+    ProgressBar progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_book_final);
 
-
+        progress = findViewById(R.id.progressBar);
         String title = "";
         String author = "";
         String description = "";
@@ -135,6 +139,7 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
     public void onClickSubmit(View view) throws Exception
     {
         try {
+            progress.setVisibility(View.VISIBLE);
             EditText[] etArr = {titleET, authorET, isbnET, priceET, descriptionET};
             for (EditText et: etArr) {
                 if (et.getText().toString().equals("")) {
@@ -149,7 +154,7 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
             String description = descriptionET.getText().toString();
             String isbn = isbnET.getText().toString();
             Double price = Double.parseDouble(priceET.getText().toString());
-            Textbook textbook = new Textbook(title, author, MainActivity.id, price, key, imageUrl, isbn, description, condition);
+            final Textbook textbook = new Textbook(title, author, MainActivity.id, price, key, imageUrl, isbn, description, condition);
 
             if (title.length() > 100) {
                 throw new Exception("Enter a shorter title");
@@ -172,13 +177,21 @@ public class AddBookFinal extends AppCompatActivity implements AdapterView.OnIte
             reference.child(key).child("imageUrl").setValue(textbook.getImageUrl());
             reference.child(key).child("isbn13").setValue(textbook.getIsbn13());
             reference.child(key).child("uniqueID").setValue(key);
-            reference.child(key).child("condition").setValue(textbook.getCondition());
+            reference.child(key).child("condition").setValue(textbook.getCondition()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        progress.setVisibility(View.GONE);
+                        Intent intent = new Intent(AddBookFinal.this, ProfileLogin.class);
+                        intent.putExtra("ADDED_BOOK_MESSAGE", "Added " + textbook.getTitle());
+                        startActivity(intent);
+                        overridePendingTransition(0,0);
+                    }
+                }
+            });
 
-            Intent intent = new Intent(this, ProfileLogin.class);
-            intent.putExtra("ADDED_BOOK_MESSAGE", "Added " + textbook.getTitle());
-            startActivity(intent);
-            overridePendingTransition(0,0);
         } catch (Exception e) {
+            progress.setVisibility(View.GONE);
             e.printStackTrace();
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_LONG).show();
         }

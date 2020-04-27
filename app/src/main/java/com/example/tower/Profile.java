@@ -68,13 +68,10 @@ public class Profile extends AppCompatActivity {
         });
 
 
-        //Initialize and Assign Variable
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
-        //Set Home Selected
         bottomNavigationView.setSelectedItemId(R.id.profile);
 
-        //Perform ItemSelectedListener
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
@@ -283,6 +280,11 @@ public class Profile extends AppCompatActivity {
 
     public void makeToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void resetPassword(View view) {
+        startActivity(new Intent(this, PasswordReset.class));
+        overridePendingTransition(0,0);
     }
 
 
