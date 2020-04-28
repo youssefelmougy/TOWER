@@ -12,7 +12,7 @@ public class EULA extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_privacy_policy);
+        setContentView(R.layout.activity_e_u_l);
 
         String pdf = "eula.pdf";
         pdfView = findViewById(R.id.pdfView);
