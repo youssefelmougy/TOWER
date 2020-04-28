@@ -209,6 +209,7 @@ public class AccountSettings extends AppCompatActivity {
     }
 
     public void submitChanges(View view) throws Exception{
+        final DatabaseReference reference = database.getReference().child("students").child(id.getText().toString());
         try {
             final FirebaseUser user = mAuth.getCurrentUser();
             EditText[] etArr = {email, currentPass, newPass};
@@ -217,7 +218,7 @@ public class AccountSettings extends AppCompatActivity {
                     throw new Exception("Don't Leave Any Information Blank");
                 }
             }
-            AuthCredential credential = EmailAuthProvider.getCredential(userEmail, currentPass.getText().toString());
+            final AuthCredential credential = EmailAuthProvider.getCredential(userEmail, currentPass.getText().toString());
 
             user.reauthenticate(credential).addOnCompleteListener(new OnCompleteListener<Void>() {
                 @Override
@@ -235,10 +236,15 @@ public class AccountSettings extends AppCompatActivity {
                                         email.setClickable(false);
                                         userEmail = email.getText().toString();
                                         email.setText(userEmail);
+                                        reference.child("email").setValue(userEmail);
                                         if (!passChanged) {
                                             submit.setVisibility(View.GONE);
                                             currentPass.setVisibility(View.GONE);
                                             currentPassTitle.setVisibility(View.GONE);
+                                        }
+                                        else {
+                                            AuthCredential credential1 = EmailAuthProvider.getCredential(userEmail, currentPass.getText().toString());
+                                            user.reauthenticate(credential);
                                         }
                                     }
                                     else {
@@ -250,20 +256,29 @@ public class AccountSettings extends AppCompatActivity {
 
                         }
                         if (passChanged) {
+                            String password = newPass.getText().toString();
                             passChanged = false;
-                            user.updatePassword(newPass.getText().toString());
-                            if (!emailChanged) {
-                                submit.setVisibility(View.GONE);
-                                currentPass.setVisibility(View.GONE);
-                                currentPassTitle.setVisibility(View.GONE);
-                            }
-                            strength.setVisibility(View.GONE);
-                            newPass.setFocusable(false);
-                            newPass.setFocusableInTouchMode(false);
-                            newPass.setClickable(false);
-                            newPass.setText("password");
-
-                            Toast.makeText(AccountSettings.this, "Password Has Been Changed", Toast.LENGTH_LONG).show();
+                            user.updatePassword(newPass.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Toast.makeText(AccountSettings.this, "Password Has Been Changed", Toast.LENGTH_LONG).show();
+                                        if (!emailChanged) {
+                                            submit.setVisibility(View.GONE);
+                                            currentPass.setVisibility(View.GONE);
+                                            currentPassTitle.setVisibility(View.GONE);
+                                        }
+                                        strength.setVisibility(View.GONE);
+                                        newPass.setFocusable(false);
+                                        newPass.setFocusableInTouchMode(false);
+                                        newPass.setClickable(false);
+                                        newPass.setText("password");
+                                    }
+                                    else {
+                                        Log.d("MikeProb", task.getException().toString());
+                                    }
+                                }
+                            });
                         }
                     }
                     else {

@@ -23,7 +23,7 @@ public class PasswordReset extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_password_reset);
 
-        emailInput = (EditText) findViewById(R.id.reset_email);
+        emailInput = findViewById(R.id.reset_email);
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
         bottomNavigationView.setSelectedItemId(R.id.profile);
@@ -41,6 +41,8 @@ public class PasswordReset extends AppCompatActivity {
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.profile:
+                        startActivity(new Intent(getApplicationContext(), Profile.class));
+                        overridePendingTransition(0,0);
                         return true;
                     case R.id.settings:
                         startActivity(new Intent(getApplicationContext(), Settings.class));
