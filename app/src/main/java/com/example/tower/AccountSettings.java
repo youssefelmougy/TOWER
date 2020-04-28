@@ -256,12 +256,14 @@ public class AccountSettings extends AppCompatActivity {
 
                         }
                         if (passChanged) {
-                            String password = newPass.getText().toString();
+                            final String password = newPass.getText().toString();
                             passChanged = false;
                             user.updatePassword(newPass.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {
+                                        AuthCredential credential1 = EmailAuthProvider.getCredential(userEmail, password);
+                                        user.reauthenticate(credential1);
                                         Toast.makeText(AccountSettings.this, "Password Has Been Changed", Toast.LENGTH_LONG).show();
                                         if (!emailChanged) {
                                             submit.setVisibility(View.GONE);
