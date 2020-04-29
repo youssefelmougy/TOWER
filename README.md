@@ -2,8 +2,6 @@
 ### What is TOWER?
 
 TOWER is a currently based, Andorid Application, to facilitate trade of textbooks between Hofstra University students. 
-It is based out of the Android Studio IDE, with the language Java being used, with firebase implementation as a database 
-to store various students and books as well as implementation of the google API.
 
 ### Initial Requirements of project
 1. Students should enable students to sell their unwanted textbooks to other students. Students will browse
@@ -45,3 +43,11 @@ need to manually add a book with Title, Author, ISBN-13, Description, Price and 
 4. Added Privacy and EULA Agreements.
 5. Added a password stength dectector
 6. Made it so you cant type letters in a numbers only are vice versa. 
+
+### How is TOWER made?
+
+It is based out of the Android Studio IDE, with the language Java being used, with firebase implementation as a database 
+to store various students and books as well as implementation of the google API.
+
+### Download?
+TOWER is currently not available to download from the google play store as of right now. To run it you need the android studio application and a emulator. 
