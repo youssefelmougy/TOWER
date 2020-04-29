@@ -158,7 +158,7 @@ public class Helper {
                 DatabaseReference reference = database.getReference().child("textbooks");
                 String key = reference.push().getKey();
 
-                textbook.setSeller(702580834);
+                textbook.setSeller(999999999);
                 textbook.setCondition("Good");
                 textbook.setPrice(6.99);
 

@@ -54,6 +54,7 @@
         android:ems="10"
         android:hint="7xxxxxxxx"
         android:inputType="none|number"
+        android:maxLength="9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2_1" />

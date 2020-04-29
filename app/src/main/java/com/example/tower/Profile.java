@@ -177,8 +177,8 @@ public class Profile extends AppCompatActivity {
                 if (et.getText().toString().equals("")) {
                     throw new Exception("Do Not Leave Any Information Blank");
                 }
-                if (et.getText().toString().length() > 25) {
-                    throw new Exception("Inputs Must be 25 Characters or Less");
+                if (et.getText().toString().length() > 60) {
+                    throw new Exception("Inputs Must be 60 Characters or Less");
                 }
             }
 
@@ -224,7 +224,6 @@ public class Profile extends AppCompatActivity {
                                         ref.child("" + id).child("id").setValue(id);
                                         ref.child("" + id).child("name").setValue(fullName);
                                         ref.child("" + id).child("email").setValue(email);
-                                        ref.child("" + id).child("password").setValue(password);
                                         ref.child("" + id).child("uID").setValue(user.getUid());
                                         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(Profile.this, new OnCompleteListener<AuthResult>() {
                                             @Override

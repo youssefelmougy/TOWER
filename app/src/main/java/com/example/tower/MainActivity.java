@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         Helper helper = new Helper(this);
         //helper.deleteAllBooks();
-        //if (count == 0) helper.floodDatabase(100);
+        //if (count == 0) helper.floodDatabase(25);
 
 
         DatabaseReference reference = database.getReference().child("textbooks");
