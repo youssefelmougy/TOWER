@@ -42,6 +42,6 @@ need to manually add a book with Title, Author, ISBN-13, Description, Price and 
 1. A browse function to see the latest books added to the system
 2. A settings option to change email address and password
 3. A forgot password option
-4. Added Privacy and Eula Agreements.
+4. Added Privacy and EULA Agreements.
 5. Added a password stength dectector
 6. Made it so you cant type letters in a numbers only are vice versa. 
