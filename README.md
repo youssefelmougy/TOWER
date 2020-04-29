@@ -51,3 +51,8 @@ to store various students and books as well as implementation of the google API.
 
 ### Download?
 TOWER is currently not available to download from the google play store as of right now. To run it you need the android studio application and a emulator. 
+
+### Screenshots
+![Home.png](https://github.com/Tower-CSC-190/TOWER/blob/master/screenshots/Home.png)
+![Login.png](https://github.com/Tower-CSC-190/TOWER/blob/master/screenshots/Login.png)
+
