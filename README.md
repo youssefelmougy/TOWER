@@ -53,8 +53,5 @@ to store various students and books as well as implementation of the Google Book
 TOWER is currently not available to download from the Google Play Store as of right now. To run it you need the Android Studio application and a emulator. 
 
 ### Screenshots
-<img src="https://github.com/Tower-CSC-190/TOWER/blob/master/screenshots/Home.png" width="300" height="600"> <img src="https://github.com/Tower-CSC-190/TOWER/blob/master/screenshots/Search%20after%20input.png" width="300" height="600"> 
+<img src="https://github.com/Tower-CSC-190/TOWER/blob/master/screenshots/Home.png" width="300" height="600"> <img src="https://github.com/Tower-CSC-190/TOWER/blob/master/screenshots/Search%20after%20input.png" width="300" height="600"> <img src="https://github.com/Tower-CSC-190/TOWER/blob/master/screenshots/SpecificTextbook.png" width="300" height="600">
 <img src="https://github.com/Tower-CSC-190/TOWER/blob/master/screenshots/Login.png" width="300" height="600"> <img src="https://github.com/Tower-CSC-190/TOWER/blob/master/screenshots/Sign-up.png" width="300" height="600"> <img src="https://github.com/Tower-CSC-190/TOWER/blob/master/screenshots/Settings.png" width="300" height="600">
-
-
-
