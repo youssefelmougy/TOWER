@@ -57,10 +57,8 @@ public class TextbookAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         // 1
         final Textbook book = textbooks.get(position);
-        Log.d("MikeC", book.getTitle());
         // 2
         if (convertView == null) {
-            Log.d("Mike", "Hey I'm here!!!");
             final LayoutInflater layoutInflater = LayoutInflater.from(mContext);
             if (originalClass.equals("Search")) {
                 convertView=layoutInflater.inflate(R.layout.textbook_search, parent, false);
@@ -71,21 +69,20 @@ public class TextbookAdapter extends BaseAdapter {
 
         }
         else {
-            Log.d("Mike", "No I'm over here");
         }
 
-        final ImageView imageView = (ImageView)convertView.findViewById(R.id.imageview_cover_art);
-        final TextView nameTextView = (TextView)convertView.findViewById(R.id.textview_book_name);
-        final TextView authorTextView = (TextView)convertView.findViewById(R.id.textview_book_author);
-        final TextView conditionTextView = (TextView)convertView.findViewById(R.id.textview_book_condition);
-        final TextView priceTextView = (TextView)convertView.findViewById(R.id.textview_book_price);
-        final LinearLayout layout = (LinearLayout)convertView.findViewById(R.id.textbook_layout);
+        final ImageView imageView = convertView.findViewById(R.id.imageview_cover_art);
+        final TextView nameTextView = convertView.findViewById(R.id.textview_book_name);
+        final TextView authorTextView = convertView.findViewById(R.id.textview_book_author);
+        final TextView conditionTextView = convertView.findViewById(R.id.textview_book_condition);
+        final TextView priceTextView = convertView.findViewById(R.id.textview_book_price);
+        final LinearLayout layout = convertView.findViewById(R.id.textbook_layout);
         final TextView sellerTextView;
         final TextView isbnTextView;
 
         if (originalClass.equals("Search")) {
-            sellerTextView = (TextView)convertView.findViewById(R.id.textview_book_seller);
-            isbnTextView = (TextView)convertView.findViewById(R.id.textview_book_isbn);
+            sellerTextView = convertView.findViewById(R.id.textview_book_seller);
+            isbnTextView = convertView.findViewById(R.id.textview_book_isbn);
             isbnTextView.setText("ISBN-13: " + book.getIsbn13());
             sellerTextView.setText("Seller: " + book.getSeller());
         }

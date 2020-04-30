@@ -95,7 +95,6 @@ public class Helper {
                     for (int i = 0; i < jsonArray.length(); i++) {
                         try {
                             if(success == 1) {
-                                Log.d("mikew", "it ran");
                                 addBook(textbook);
                                 break;
                             }
@@ -129,7 +128,6 @@ public class Helper {
                             String imageUrl = linkObject.getString("thumbnail");
                             imageUrl = imageUrl.substring(0,4)+"s" + imageUrl.substring(4)+".jpg";
                             textbook = new Textbook(title, authors, isbn13, imageUrl, description);
-                            Log.d("MikeX", textbook.getAuthor());
                             success++;
                         } catch (JSONException e) {
                             continue;

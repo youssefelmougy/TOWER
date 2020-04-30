@@ -33,9 +33,17 @@ import java.util.Stack;
 
 public class MainActivity extends AppCompatActivity {
 
+    /*
+    Static variables loggedIn and id are updated when a user is logged in.
+     */
     public static Boolean loggedIn = false;
     public static long id = 0;
     FirebaseAuth mAuth = FirebaseAuth.getInstance();
+
+    /*
+    Static list of textbooks and count are created in order to ensure the grid of books
+    doesn't update until the user hits refresh.
+     */
     static ArrayList<Textbook> textbooks = new ArrayList<>();
     static int count = 0;
     GridView gridView;
@@ -106,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             final String uID = user.getUid();
-            Log.d("MikeP", uID);
             DatabaseReference reference1 = database.getReference().child("students");
             reference1.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -118,7 +125,6 @@ public class MainActivity extends AppCompatActivity {
                             String id = snapshot.child("id").getValue().toString();
                             MainActivity.loggedIn = true;
                             MainActivity.id = Long.parseLong(id);
-                            Log.d("MikeP", id);
 
                         }
                     }
@@ -139,13 +145,11 @@ public class MainActivity extends AppCompatActivity {
         reference.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                //ArrayList<Textbook> textbooks = new ArrayList<>();
                 Stack<Textbook> textbookStack = new Stack<>();
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     Textbook textbook = snapshot.getValue(Textbook.class);
                     textbookStack.push(textbook);
                 }
-                Log.d("StackSize", "" + textbookStack.size());
                 int max = 0;
                 while(!textbookStack.isEmpty()) {
                     if(max == 20) break;

@@ -277,7 +277,7 @@ public class AccountSettings extends AppCompatActivity {
                                         newPass.setText("password");
                                     }
                                     else {
-                                        Log.d("MikeProb", task.getException().toString());
+                                        Log.d("MikeC", task.getException().toString());
                                     }
                                 }
                             });

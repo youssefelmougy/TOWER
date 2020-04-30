@@ -53,11 +53,9 @@ public class ProfileLogin extends AppCompatActivity {
         mainLayout = findViewById(R.id.profile_login_layout);
         firstBookAdd = findViewById(R.id.add_first_book_text);
         firstArrow = findViewById(R.id.imageView);
-        Log.d("MikeX", "" + studentID);
 
         displayTextbooks(this, gridView);
 
-        Log.d("Mike", "" + studentID);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
 
@@ -97,7 +95,6 @@ public class ProfileLogin extends AppCompatActivity {
         FirebaseUser user = mAuth.getCurrentUser();
         if (user != null) {
             final String uID = user.getUid();
-            Log.d("MikeP", uID);
             DatabaseReference reference1 = database.getReference().child("students");
             reference1.addValueEventListener(new ValueEventListener() {
                 @Override
@@ -149,12 +146,9 @@ public class ProfileLogin extends AppCompatActivity {
                 ArrayList<Textbook> textbooks = new ArrayList<>();
                 for(DataSnapshot snapshot: dataSnapshot.getChildren()) {
                     Textbook textbook = snapshot.getValue(Textbook.class);
-                    Log.d("ekim", "image_url " + textbook.getImageUrl());
                     if(textbook.getSeller() == MainActivity.id) {
-                        Log.d("MikeC", "Reached!!");
                         textbooks.add(textbook);
                     }
-                    Log.d("MikeC", "" + textbooks.size());
                 }
                 adapter = new TextbookAdapter(context, textbooks,getLocalClassName());
                 if (textbooks.size() == 0) {

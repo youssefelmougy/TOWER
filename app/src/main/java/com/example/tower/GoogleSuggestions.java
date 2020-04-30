@@ -156,7 +156,6 @@ public class GoogleSuggestions extends AppCompatActivity {
                     }
 
                 } catch (JSONException e) {
-                    Log.d("MikeC", "Not found?");
                     e.printStackTrace();
                 }
                 gridView.setAdapter(new TextbookAdapter(context, textbooks, getLocalClassName(),rawTitle));
@@ -164,7 +163,6 @@ public class GoogleSuggestions extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.d("MikeC", "onErrorResponse fuck");
                 error.printStackTrace();
             }
         });

@@ -258,7 +258,6 @@ public class SpecificTextbook extends AppCompatActivity {
 
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        Log.d("ekim", "positive is called");
                         ref.removeValue();
                         Intent intent = goBack();
                         startActivity(intent);
@@ -272,7 +271,6 @@ public class SpecificTextbook extends AppCompatActivity {
 
                     @Override
                     public void onClick(DialogInterface arg0, int arg1) {
-                        Log.d("ekim", "negative is called");
 
                     }
                 });

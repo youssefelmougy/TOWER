@@ -197,7 +197,6 @@ public class Profile extends AppCompatActivity {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                     if (dataSnapshot.exists()) {
-                        Log.d("MikeQ", "A user with this ID exists");
                         Toast.makeText(Profile.this, "A User With this ID Already Exists", Toast.LENGTH_LONG).show();
 
                     }
@@ -217,7 +216,6 @@ public class Profile extends AppCompatActivity {
                             mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(Profile.this, new OnCompleteListener<AuthResult>() {
                                 @Override
                                 public void onComplete(@NonNull Task<AuthResult> task) {
-                                    Log.d("MikeX", "success?");
                                     if(task.isSuccessful()) {
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         user.sendEmailVerification();
