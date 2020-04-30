@@ -5,7 +5,7 @@ TOWER is a currently based, Andorid Application, to facilitate trade of textbook
 
 ### Initial Requirements of project
 1. Students should enable students to sell their unwanted textbooks to other students. Students will browse
-the avaialable textbooks on their mobile (Android or IOS based) and must have access to the following capabilities.
+the avaialable textbooks on their mobile (Android or iOS based) and must have access to the following capabilities.
 2. Registration for the system by providing their name, Hofstra ID, e-mail Address, and a password. Ability to log-in 
 to the system by enterign their Hofstra ID and password. 
 3. Search for textbooks by title, ISBN number, or author, and scroll through the
@@ -27,7 +27,7 @@ from Amazon, including an image of the textbook cover, price, authors, and the
 book description.
 
 ### Changed Requirements
-1. It is a Android Based as of for now. 
+1. It is a Android Based for now. 
 2. No Change.
 3. No Change.
 4. Puts the buyer into direct contact with the seller through email.
@@ -46,11 +46,11 @@ need to manually add a book with Title, Author, ISBN-13, Description, Price and 
 
 ### How is TOWER made?
 
-It is based out of the Android Studio IDE, with the language Java being used, with firebase implementation as a database 
-to store various students and books as well as implementation of the google API.
+It is based out of the Android Studio IDE, with the language Java being used, with Firebase implementation as a database 
+to store various students and books as well as implementation of the Google Books API.
 
 ### Download?
-TOWER is currently not available to download from the google play store as of right now. To run it you need the android studio application and a emulator. 
+TOWER is currently not available to download from the Google Play Store as of right now. To run it you need the Android Studio application and a emulator. 
 
 ### Screenshots
 <img src="https://github.com/Tower-CSC-190/TOWER/blob/master/screenshots/Home.png" width="300" height="600"> <img src="https://github.com/Tower-CSC-190/TOWER/blob/master/screenshots/Search%20after%20input.png" width="300" height="600"> 
