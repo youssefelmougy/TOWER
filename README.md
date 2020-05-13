@@ -1,7 +1,7 @@
 # TOWER v1.0.
 ### What is TOWER?
 
-TOWER is a currently based, Andorid Application, to facilitate trade of textbooks between Hofstra University students. 
+TOWER is an Android Application designed to facilitate the trade of textbooks between Hofstra University students.
 
 ### Initial Requirements of project
 1. Students should enable students to sell their unwanted textbooks to other students. Students will browse
